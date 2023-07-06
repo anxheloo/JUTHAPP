@@ -1,10 +1,16 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import Header from "./Header";
 import { LinearGradient } from "expo-linear-gradient";
+import Story from "./Story";
+import ButtonGroup from "./ButtonGroup";
+import TabbedComponent from "./TabbedComponent";
+import TabViewExample from "./TabViewExample";
+import Footer from "./Footer";
 
 const MainComponent = () => {
   return (
+    // <SafeAreaView style={styles.container}>
     <LinearGradient
       style={styles.container}
       colors={[
@@ -21,6 +27,10 @@ const MainComponent = () => {
       ]}
     >
       <Header />
+      <Story></Story>
+      <ButtonGroup></ButtonGroup>
+      <TabViewExample></TabViewExample>
+      <Footer style={styles.footer}></Footer>
     </LinearGradient>
   );
 };
@@ -28,6 +38,7 @@ const MainComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // padding: 10,
   },
 });
 

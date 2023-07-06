@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const Header = () => {
   return (
@@ -16,14 +16,17 @@ const Header = () => {
         ></Image>
       </View>
 
-      <View>
-        <View style={styles.profileContainer}>
+      <View style={styles.rightSection}>
+        <TouchableOpacity
+          style={styles.profileContainer}
+          onPress={() => console.log("Profile Opened")}
+        >
           <Text>Hi Nixho</Text>
           <Image
             style={styles.profileImage}
             source={require("../assets/images/unnamed.png")}
           ></Image>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.supportIcons}>
           <Image
@@ -55,12 +58,22 @@ const styles = StyleSheet.create({
 
   logoContainer: {
     flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "center",
     gap: 10,
+  },
+
+  rightSection: {
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 
   profileContainer: {
     flexDirection: "row",
     gap: 10,
+    alignItems: "center",
+    paddingTop: 15,
+    // justifyContent: "center",
   },
 
   supportIcons: {
@@ -75,8 +88,9 @@ const styles = StyleSheet.create({
     height: 50,
   },
   profileImage: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
+    borderRadius: 30,
   },
   supportImage: {
     width: 20,
