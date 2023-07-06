@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import MainComponent from "./MainComponent";
 
 const LoginPage = () => {
   const defaultPhoneNumber = "+355 6 _ _ _ _ _ _ _ _";
@@ -29,6 +30,7 @@ const LoginPage = () => {
 
   const handleSubmit = () => {
     console.log(phoneNumber);
+    navigation.navigate(MainComponent);
   };
 
   const dismissKeyboard = () => {
@@ -67,7 +69,7 @@ const LoginPage = () => {
               value={phoneNumber}
               onChangeText={handlePhoneNumberChange}
               onPressIn={onClickMyButton}
-              maxLength={13}
+              maxLength={14}
             />
           </View>
           <View>
