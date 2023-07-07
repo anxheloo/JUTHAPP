@@ -97,8 +97,17 @@ const TabViewExample = () => {
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      // indicatorStyle={{ backgroundColor: "white" }}
-      style={{ backgroundColor: "transparent" }}
+      indicatorStyle={{
+        backgroundColor: "white",
+        width: 20,
+        // marginLeft: "50%",
+        // alignSelf: "center",
+        marginHorizontal: 60,
+        marginTop: 20,
+      }}
+      style={{
+        backgroundColor: "transparent",
+      }}
     />
   );
 
@@ -141,6 +150,8 @@ const styles = StyleSheet.create({
 
   tabBar: {
     marginTop: 50,
+    width: "auto",
+    // flex: 1,
   },
 });
 

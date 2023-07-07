@@ -9,7 +9,7 @@ const OptionComponent = (props) => {
           source={require("../assets/images/unnamed.png")}
           style={styles.image1}
         ></Image>
-        <Text>Balanca</Text>
+        <Text style={styles.text}>Balanca</Text>
       </View>
       <View style={styles.element2}>
         <Image
@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
   image2: {
     width: 50,
     height: 50,
+  },
+
+  text: {
+    color: "white",
   },
 });
 

@@ -25,6 +25,7 @@ const Story = () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
+    // flex: 2,
     height: "15%",
     padding: 20,
   },

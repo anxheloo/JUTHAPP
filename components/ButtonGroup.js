@@ -54,6 +54,7 @@ const ButtonGroup = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },

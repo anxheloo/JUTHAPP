@@ -1,8 +1,10 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Footer = () => {
   return (
+    // <SafeAreaView style={styles.safeArea}>
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         <TouchableOpacity
@@ -37,11 +39,13 @@ const Footer = () => {
         </TouchableOpacity>
       </View>
     </View>
+    // </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
+    // flex: 1,
     alignItems: "center",
     height: "8.5%",
   },
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: "100%",
-    backgroundColor: "blue",
+    backgroundColor: "#00364e",
     justifyContent: "center",
     justifyContent: "space-between",
     borderRadius: 30,
@@ -67,11 +71,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -25,
     left: "41%",
-    width: "15%",
-    height: 140,
+    width: "16%",
+    height: "140%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#00364e",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   },

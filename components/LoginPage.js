@@ -12,8 +12,10 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MainComponent from "./MainComponent";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const LoginPage = () => {
+const LoginPage = ({ navigation }) => {
   const defaultPhoneNumber = "+355 6 _ _ _ _ _ _ _ _";
   const [phoneNumber, setPhoneNumber] = useState(defaultPhoneNumber);
 
@@ -30,7 +32,7 @@ const LoginPage = () => {
 
   const handleSubmit = () => {
     console.log(phoneNumber);
-    navigation.navigate(MainComponent);
+    navigation.navigate("Main");
   };
 
   const dismissKeyboard = () => {

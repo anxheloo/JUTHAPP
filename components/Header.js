@@ -29,18 +29,26 @@ const Header = () => {
         </TouchableOpacity>
 
         <View style={styles.supportIcons}>
-          <Image
-            style={styles.supportImage}
-            source={require("../assets/images/unnamed.png")}
-          ></Image>
-          <Image
-            style={styles.supportImage}
-            source={require("../assets/images/unnamed.png")}
-          ></Image>
-          <Image
-            style={styles.supportImage}
-            source={require("../assets/images/unnamed.png")}
-          ></Image>
+          <TouchableOpacity onPress={() => console.log("Settings")}>
+            <Image
+              style={styles.supportImage}
+              source={require("../assets/images/unnamed.png")}
+            ></Image>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => console.log("Support")}>
+            <Image
+              style={styles.supportImage}
+              source={require("../assets/images/unnamed.png")}
+            ></Image>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => console.log("Notifications")}>
+            <Image
+              style={styles.supportImage}
+              source={require("../assets/images/unnamed.png")}
+            ></Image>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -49,11 +57,12 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
+    // flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20,
-    marginTop: 30,
+    padding: "5%",
+    marginTop: "5%",
   },
 
   logoContainer: {
@@ -70,9 +79,9 @@ const styles = StyleSheet.create({
 
   profileContainer: {
     flexDirection: "row",
-    gap: 10,
+    gap: 8,
     alignItems: "center",
-    paddingTop: 15,
+    paddingTop: "10%",
     // justifyContent: "center",
   },
 
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     justifyContent: "space-between",
-    paddingTop: 10,
+    paddingTop: "10%",
   },
 
   image: {
