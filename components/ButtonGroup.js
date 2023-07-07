@@ -54,19 +54,19 @@ const ButtonGroup = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    height: "4.5%",
   },
 
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: "5%",
     width: "90%",
-    height: 40,
-    paddingHorizontal: 15,
+    height: "100%",
+    paddingHorizontal: "5%",
     backgroundColor: "rgba(255,255,255,0.2)",
     borderRadius: 30,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     borderRightColor: "rgba(255,255,255,0.5)",
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.5)",
-    paddingHorizontal: 20,
+    paddingHorizontal: "8%",
   },
 
   button: {

@@ -1,19 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const StoryItem = () => {
+const StoryItem = (props) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.imageContainer}
-        onPress={() => console.log("Story Opened")}
-      >
-        <Image
-          style={styles.image}
-          source={require("../assets/images/unnamed.png")}
-        ></Image>
-      </TouchableOpacity>
-      <Text style={styles.text}>Unlimited</Text>
+      <View style={styles.imageContainerView}>
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={() => console.log("Story Opened")}
+        >
+          <Image
+            style={styles.image}
+            source={require("../assets/images/unnamed.png")}
+          ></Image>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{props.text}</Text>
+      </View>
     </View>
   );
 };
@@ -22,9 +27,18 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
-    padding: 5,
-    marginRight: 12,
+    gap: 5,
+    padding: 7,
+    marginRight: 10,
+    maxWidth: 90,
+    height: "100%",
+  },
+
+  imageContainerView: {
+    height: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "black",
   },
 
   imageContainer: {
@@ -43,11 +57,16 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 
+  textContainer: {
+    height: "40%",
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "red",
+  },
+
   text: {
-    // flex: 1,
-    // marginLeft: 10,
-    // overflow: "hidden",
     color: "white",
+    textAlign: "center",
   },
 });
 

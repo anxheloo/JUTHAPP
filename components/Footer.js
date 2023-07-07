@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
 
 const Footer = () => {
   return (
@@ -23,10 +24,11 @@ const Footer = () => {
             console.log("Middle");
           }}
         >
-          <Image
+          {/* <Image
             style={styles.image}
             source={require("../assets/images/unnamed.png")}
-          ></Image>
+          ></Image> */}
+          <Feather name="smartphone" size={40} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignItems: "center",
     height: "8.5%",
+    width: "100%",
   },
 
   container: {
@@ -57,7 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00364e",
     justifyContent: "center",
     justifyContent: "space-between",
-    borderRadius: 30,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     position: "relative",
   },
 
@@ -69,15 +73,16 @@ const styles = StyleSheet.create({
 
   middleButton: {
     position: "absolute",
-    top: -25,
+    // top: -25,
+    top: "-35%",
     left: "41%",
-    width: "16%",
+    width: "17%",
     height: "140%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#00364e",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
   },
 
   rightButton: {

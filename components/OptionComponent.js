@@ -9,7 +9,7 @@ const OptionComponent = (props) => {
           source={require("../assets/images/unnamed.png")}
           style={styles.image1}
         ></Image>
-        <Text style={styles.text}>Balanca</Text>
+        <Text style={styles.text}>{props.text}</Text>
       </View>
       <View style={styles.element2}>
         <Image
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   element1: {
     justifyContent: "space-between",
-    padding: 10,
+    padding: "7%",
   },
 
   image1: {

@@ -1,5 +1,9 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Header = () => {
   return (
@@ -26,28 +30,52 @@ const Header = () => {
             style={styles.profileImage}
             source={require("../assets/images/unnamed.png")}
           ></Image>
+          {/* <MaterialCommunityIcons
+            style={styles.profileImage}
+            name="face-man-profile"
+            size={24}
+            color="black"
+          /> */}
         </TouchableOpacity>
 
         <View style={styles.supportIcons}>
           <TouchableOpacity onPress={() => console.log("Settings")}>
-            <Image
+            {/* <Image
               style={styles.supportImage}
               source={require("../assets/images/unnamed.png")}
-            ></Image>
+            ></Image> */}
+            <Feather
+              style={styles.supportImage}
+              name="settings"
+              size={27}
+              color="white"
+            />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => console.log("Support")}>
-            <Image
+            {/* <Image
               style={styles.supportImage}
               source={require("../assets/images/unnamed.png")}
-            ></Image>
+            ></Image> */}
+            <MaterialIcons
+              style={styles.supportImage}
+              name="support-agent"
+              size={27}
+              color="white"
+            />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => console.log("Notifications")}>
-            <Image
+            {/* <Image
               style={styles.supportImage}
               source={require("../assets/images/unnamed.png")}
-            ></Image>
+            ></Image> */}
+            <EvilIcons
+              style={styles.supportImage}
+              name="bell"
+              size={27}
+              color="white"
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -57,39 +85,35 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    padding: "5%",
-    marginTop: "5%",
+    paddingHorizontal: "4%",
+    marginTop: "12%",
   },
 
   logoContainer: {
     flexDirection: "row",
-    // alignItems: "center",
-    // justifyContent: "center",
     gap: 10,
+    alignItems: "baseline",
   },
 
   rightSection: {
-    // alignItems: "center",
-    // justifyContent: "center",
+    // backgroundColor: "green",
   },
 
   profileContainer: {
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    paddingTop: "10%",
-    // justifyContent: "center",
   },
 
   supportIcons: {
+    // margin: 10,
     flexDirection: "row",
     justifyContent: "flex-end",
     justifyContent: "space-between",
-    paddingTop: "10%",
+    alignItems: "center",
+    marginTop: 8,
   },
 
   image: {
@@ -97,13 +121,14 @@ const styles = StyleSheet.create({
     height: 50,
   },
   profileImage: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     borderRadius: 30,
   },
   supportImage: {
-    width: 20,
-    height: 20,
+    // width: 25,
+    // height: 25,
+    // marginLeft: 10,
   },
 });
 

@@ -10,14 +10,13 @@ const Story = () => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
-        <StoryItem></StoryItem>
+        <StoryItem text={"Unlimited"}></StoryItem>
+        <StoryItem text={"New Dashboard"}></StoryItem>
+        <StoryItem text={"Tik Tok Pass"}></StoryItem>
+        <StoryItem text={"JUTH with a Purpose"}></StoryItem>
+        <StoryItem text={"Spin the wheel"}></StoryItem>
+        <StoryItem text={"Gigamarket"}></StoryItem>
+        <StoryItem text={"Born to Change"}></StoryItem>
       </ScrollView>
     </View>
   );
@@ -25,9 +24,11 @@ const Story = () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    // flex: 2,
-    height: "15%",
-    padding: 20,
+    height: "16%",
+    paddingHorizontal: "3%",
+    paddingTop: "4%",
+    marginBottom: "3%",
+    // backgroundColor: "white",
   },
 });
 

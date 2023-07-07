@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  useWindowDimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import OptionComponent from "./OptionComponent";
 
@@ -12,11 +7,13 @@ const FirstRoute = () => (
   <View style={styles.firstTab}>
     <View style={styles.firstRow}>
       <OptionComponent
+        text={"Balanca"}
         onPress={() => {
           console.log("Balanca 1 pressed");
         }}
       ></OptionComponent>
       <OptionComponent
+        text={"Transfero"}
         onPress={() => {
           console.log("Balanca 2 pressed");
         }}
@@ -25,11 +22,13 @@ const FirstRoute = () => (
 
     <View style={styles.secondRow}>
       <OptionComponent
+        text={"Vodafone More"}
         onPress={() => {
           console.log("Balanca 3 pressed");
         }}
       ></OptionComponent>
       <OptionComponent
+        text={"FlowerBox"}
         onPress={() => {
           console.log("Balanca 4 pressed");
         }}
@@ -42,11 +41,13 @@ const SecondRoute = () => (
   <View style={styles.firstTab}>
     <View style={styles.firstRow}>
       <OptionComponent
+        text={"Spin the Wheel"}
         onPress={() => {
           console.log("Balanca 5 pressed");
         }}
       ></OptionComponent>
       <OptionComponent
+        text={"Giga Space"}
         onPress={() => {
           console.log("Balanca 6 pressed");
         }}
@@ -55,11 +56,13 @@ const SecondRoute = () => (
 
     <View style={styles.secondRow}>
       <OptionComponent
+        text={"XP Events"}
         onPress={() => {
           console.log("Balanca 7 pressed");
         }}
       ></OptionComponent>
       <OptionComponent
+        text={"Pupthi"}
         onPress={() => {
           console.log("Balanca 8 pressed");
         }}
@@ -71,6 +74,7 @@ const SecondRoute = () => (
 const ThirdRoute = () => (
   <View style={styles.thirdTab}>
     <OptionComponent
+      text={"Junior Job Opportunities"}
       onPress={() => {
         console.log("Balanca 9 pressed");
       }}
@@ -100,13 +104,17 @@ const TabViewExample = () => {
       indicatorStyle={{
         backgroundColor: "white",
         width: 20,
-        // marginLeft: "50%",
-        // alignSelf: "center",
         marginHorizontal: 60,
         marginTop: 20,
       }}
+      labelStyle={{
+        fontSize: 15,
+        // fontWeight: "bold",
+        textTransform: "none",
+      }}
       style={{
         backgroundColor: "transparent",
+        marginTop: 10,
       }}
     />
   );
@@ -116,7 +124,7 @@ const TabViewExample = () => {
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
+      // initialLayout={{ width: layout.width }}
       style={styles.tabBar}
       renderTabBar={renderTabBar}
     />
@@ -126,9 +134,9 @@ const TabViewExample = () => {
 const styles = StyleSheet.create({
   firstTab: {
     flex: 1,
-    padding: 20,
-    gap: 40,
-    marginTop: 28,
+    padding: "2%",
+    gap: 30,
+    marginTop: "5%",
   },
 
   firstRow: {
@@ -145,13 +153,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: "center",
-    marginTop: 25,
+    marginTop: "2%",
   },
 
   tabBar: {
-    marginTop: 50,
-    width: "auto",
-    // flex: 1,
+    marginTop: "5%",
   },
 });
 

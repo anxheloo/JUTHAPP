@@ -1,10 +1,9 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import Header from "./Header";
 import { LinearGradient } from "expo-linear-gradient";
 import Story from "./Story";
 import ButtonGroup from "./ButtonGroup";
-import TabbedComponent from "./TabbedComponent";
 import TabViewExample from "./TabViewExample";
 import Footer from "./Footer";
 
