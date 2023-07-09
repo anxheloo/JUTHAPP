@@ -27,10 +27,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    gap: 5,
-    padding: 7,
-    marginRight: 10,
-    maxWidth: 90,
+    gap: 3,
+    marginRight: 5,
+    width: 85,
     height: "100%",
   },
 
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     height: "60%",
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "black",
   },
 
   imageContainer: {
@@ -58,10 +56,10 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
+    maxWidth: "100%",
     height: "40%",
     alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "red",
+    justifyContent: "flex-start",
   },
 
   text: {

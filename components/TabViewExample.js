@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import OptionComponent from "./OptionComponent";
+// import { useWindowDimensions } from "react-native";
 
 const FirstRoute = () => (
   <View style={styles.firstTab}>
@@ -89,7 +90,8 @@ const renderScene = SceneMap({
 });
 
 const TabViewExample = () => {
-  const layout = useWindowDimensions();
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -104,17 +106,16 @@ const TabViewExample = () => {
       indicatorStyle={{
         backgroundColor: "white",
         width: 20,
-        marginHorizontal: 60,
         marginTop: 20,
+        left: (windowWidth / routes.length - 20) / 2,
       }}
       labelStyle={{
         fontSize: 15,
-        // fontWeight: "bold",
         textTransform: "none",
       }}
       style={{
         backgroundColor: "transparent",
-        marginTop: 10,
+        // marginTop: 10,
       }}
     />
   );
@@ -124,7 +125,6 @@ const TabViewExample = () => {
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
-      // initialLayout={{ width: layout.width }}
       style={styles.tabBar}
       renderTabBar={renderTabBar}
     />
@@ -151,9 +151,9 @@ const styles = StyleSheet.create({
 
   thirdTab: {
     flex: 1,
-    padding: 20,
+    paddingTop: "2%",
     alignItems: "center",
-    marginTop: "2%",
+    marginTop: "5%",
   },
 
   tabBar: {

@@ -11,9 +11,7 @@ import {
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import MainComponent from "./MainComponent";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 
 const LoginPage = ({ navigation }) => {
   const defaultPhoneNumber = "+355 6 _ _ _ _ _ _ _ _";
@@ -56,6 +54,7 @@ const LoginPage = ({ navigation }) => {
           "#d555e1",
         ]}
       >
+        <StatusBar style="auto"></StatusBar>
         <View style={styles.logoContainer}>
           <Image
             style={styles.image}

@@ -6,6 +6,7 @@ import Story from "./Story";
 import ButtonGroup from "./ButtonGroup";
 import TabViewExample from "./TabViewExample";
 import Footer from "./Footer";
+import { StatusBar } from "expo-status-bar";
 
 const MainComponent = () => {
   return (
@@ -25,6 +26,7 @@ const MainComponent = () => {
         "#d555e1",
       ]}
     >
+      <StatusBar style="auto"></StatusBar>
       <Header />
       <Story></Story>
       <ButtonGroup></ButtonGroup>

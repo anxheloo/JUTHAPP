@@ -17,19 +17,16 @@ const Footer = () => {
           <Text style={styles.text}>Portofoli</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={styles.middleButton}
-          onPress={() => {
-            console.log("Middle");
-          }}
-        >
-          {/* <Image
-            style={styles.image}
-            source={require("../assets/images/unnamed.png")}
-          ></Image> */}
-          <Feather name="smartphone" size={40} color="white" />
-        </TouchableOpacity>
+        <View style={styles.middleButton}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              console.log("Middle");
+            }}
+          >
+            <Feather name="smartphone" size={40} color="white" />
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           style={styles.rightButton}
@@ -47,9 +44,8 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // flex: 1,
     alignItems: "center",
-    height: "8.5%",
+    height: 65,
     width: "100%",
   },
 
@@ -73,9 +69,8 @@ const styles = StyleSheet.create({
 
   middleButton: {
     position: "absolute",
-    // top: -25,
-    top: "-35%",
-    left: "41%",
+    top: -25,
+    left: "41.5%",
     width: "17%",
     height: "140%",
     alignItems: "center",

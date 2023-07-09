@@ -40,10 +40,6 @@ const Header = () => {
 
         <View style={styles.supportIcons}>
           <TouchableOpacity onPress={() => console.log("Settings")}>
-            {/* <Image
-              style={styles.supportImage}
-              source={require("../assets/images/unnamed.png")}
-            ></Image> */}
             <Feather
               style={styles.supportImage}
               name="settings"
@@ -53,10 +49,6 @@ const Header = () => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => console.log("Support")}>
-            {/* <Image
-              style={styles.supportImage}
-              source={require("../assets/images/unnamed.png")}
-            ></Image> */}
             <MaterialIcons
               style={styles.supportImage}
               name="support-agent"
@@ -66,10 +58,6 @@ const Header = () => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => console.log("Notifications")}>
-            {/* <Image
-              style={styles.supportImage}
-              source={require("../assets/images/unnamed.png")}
-            ></Image> */}
             <EvilIcons
               style={styles.supportImage}
               name="bell"
@@ -88,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: "4%",
-    marginTop: "12%",
+    marginTop: 45,
   },
 
   logoContainer: {
@@ -98,13 +86,14 @@ const styles = StyleSheet.create({
   },
 
   rightSection: {
-    // backgroundColor: "green",
+    width: "30%",
   },
 
   profileContainer: {
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
+    justifyContent: "flex-end",
   },
 
   supportIcons: {

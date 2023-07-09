@@ -24,6 +24,7 @@ const OptionComponent = (props) => {
 const styles = StyleSheet.create({
   mainContainer: {
     width: "42%",
+    maxWidth: 250,
     height: 100,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -31,8 +32,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   element1: {
+    flex: 2,
     justifyContent: "space-between",
-    padding: "7%",
+    padding: 10,
   },
 
   image1: {
@@ -42,7 +44,8 @@ const styles = StyleSheet.create({
   },
 
   element2: {
-    alignItems: "center",
+    flex: 1,
+    alignItems: "flex-end",
     justifyContent: "center",
   },
 
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
 
   text: {
     color: "white",
+    maxWidth: "95%",
   },
 });
 

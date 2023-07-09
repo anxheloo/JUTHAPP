@@ -24,9 +24,11 @@ const Story = () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    height: "16%",
+    // height: "16%",
+    height: 130,
     paddingHorizontal: "3%",
-    paddingTop: "4%",
+    // paddingTop: "5%",
+    paddingTop: 10,
     marginBottom: "3%",
     // backgroundColor: "white",
   },

@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
   mainContainer: {
     alignItems: "center",
     justifyContent: "center",
-    height: "4.5%",
+    height: 35,
   },
 
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginTop: "5%",
+    marginTop: "3%",
     width: "90%",
     height: "100%",
     paddingHorizontal: "5%",
