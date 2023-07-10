@@ -112,6 +112,9 @@ const TabViewExample = () => {
       labelStyle={{
         fontSize: 15,
         textTransform: "none",
+        flexWrap: "nowrap", // Prevent text wrapping
+        width: "100%", // Occupy full available width
+        paddingHorizontal: 10,
       }}
       style={{
         backgroundColor: "transparent",

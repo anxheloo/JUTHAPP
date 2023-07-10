@@ -16,20 +16,28 @@ import { StatusBar } from "expo-status-bar";
 const LoginPage = ({ navigation }) => {
   const defaultPhoneNumber = "+355 6 _ _ _ _ _ _ _ _";
   const [phoneNumber, setPhoneNumber] = useState(defaultPhoneNumber);
+  const [numberChecker, setNumberChecker] = useState("");
 
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");
   };
 
   const handlePhoneNumberChange = (text) => {
-    const formattedNumber = text
-      .replace(/\D/g, "") // Remove all non-digit characters
-      .slice(0, 8); // Limit the length to 8 digits
+    const formattedNumber = text.replace(/\D/g, ""); // Remove all non-digit characters
+    // .slice(0, 8); // Limit the length to 8 digits
     setPhoneNumber(text);
   };
 
   const handleSubmit = () => {
     console.log(phoneNumber);
+    console.log(phoneNumber.length);
+
+    if (phoneNumber.length < 14) {
+      setNumberChecker("Numri shume i shkurter");
+      return;
+    }
+
+    setNumberChecker(""); // Clear the warning message
     navigation.navigate("Main");
   };
 
@@ -73,6 +81,9 @@ const LoginPage = ({ navigation }) => {
               maxLength={14}
             />
           </View>
+
+          <Text>{numberChecker}</Text>
+
           <View>
             <TouchableOpacity
               style={styles.buttonContainer}

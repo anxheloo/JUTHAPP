@@ -23,6 +23,7 @@ const ButtonGroup = () => {
             <Text style={styles.buttonText}>32282</Text>
           </TouchableOpacity>
         </View>
+
         <View style={[styles.buttonContainer, styles.middleBorders]}>
           <TouchableOpacity
             style={styles.button}
@@ -35,6 +36,7 @@ const ButtonGroup = () => {
             <Text style={styles.buttonText}>13.95 GB</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
     borderRightColor: "rgba(255,255,255,0.5)",
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.5)",
-    paddingHorizontal: "8%",
+    paddingHorizontal: "6%",
   },
 
   button: {
