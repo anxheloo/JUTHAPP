@@ -1,142 +1,3 @@
-// import React from "react";
-// import { StyleSheet, View, Text, Dimensions, Image } from "react-native";
-// import { TouchableOpacity } from "react-native-gesture-handler";
-// import ViewSlider from "react-native-view-slider";
-
-// const { width, height } = Dimensions.get("window");
-
-// function SliderComponent(props) {
-//   return (
-//     // <View style={styles.container}>
-//     <ViewSlider
-//       renderSlides={
-//         <>
-//           <View style={styles.viewBox}>
-//             <TouchableOpacity
-//               style={styles.content1}
-//               onPress={console.log("content 1 pressed")}
-//             ></TouchableOpacity>
-//             <TouchableOpacity style={styles.content2}></TouchableOpacity>
-//           </View>
-
-//           <View style={styles.viewBox}>
-//             <TouchableOpacity style={styles.content1}></TouchableOpacity>
-//             <TouchableOpacity style={styles.content2}></TouchableOpacity>
-//           </View>
-//         </>
-//       }
-//       style={styles.slider} //Main slider container style
-//       height={200} //Height of your slider
-//       slideCount={2} //How many views you are adding to slide
-//       dots={true} // Pagination dots visibility true for visibile
-//       dotActiveColor="white" //Pagination dot active color
-//       dotInactiveColor="gray" // Pagination do inactive color
-//       dotsContainerStyle={styles.dotContainer} // Container style of the pagination dots
-//       autoSlide={true} //The views will slide automatically
-//       // slideInterval={1000} //In Miliseconds
-//     />
-//     // </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   slider: {
-//     flex: 1,
-//   },
-
-//   dotContainer: {
-//     justifyContent: "center",
-//   },
-
-//   content1: {
-//     width: "30%",
-//     backgroundColor: "white",
-//     borderRadius: 10,
-//     height: 100,
-//   },
-// });
-
-// export default SliderComponent;
-
-// import React from "react";
-// import {
-//   StyleSheet,
-//   View,
-//   Text,
-//   Dimensions,
-//   Image,
-//   ScrollView,
-// } from "react-native";
-// import { TouchableOpacity } from "react-native-gesture-handler";
-// import ViewSlider from "react-native-view-slider";
-// import { ImageBackground } from "react-native-web";
-
-// const SliderComponent = () => {
-//   return (
-//     <View>
-//       <ScrollView
-//         style={styles.contentContainer}
-//         horizontal={true}
-//         showsHorizontalScrollIndicator={true}
-//         indicatorStyle=""
-//       >
-//         <View style={styles.firstContent}>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//         </View>
-
-//         <View style={styles.firstContent}>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//         </View>
-
-//         <View style={styles.firstContent}>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//         </View>
-
-//         <View style={styles.firstContent}>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//         </View>
-
-//         <View style={styles.firstContent}>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//           <TouchableOpacity style={styles.container}></TouchableOpacity>
-//         </View>
-//       </ScrollView>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   contentContainer: {
-//     flexDirection: "row",
-//     gap: 20,
-//     height: 130,
-//     paddingHorizontal: "3%",
-//     paddingTop: 10,
-//     marginBottom: "3%",
-//     backgroundColor: "red",
-//   },
-
-//   firstContent: {
-//     flex: 1,
-//     flexDirection: "row",
-//     width: "100%",
-//     height: 120,
-//     backgroundColor: "white",
-//   },
-
-//   container: {
-//     backgroundColor: "blue",
-//     width: 50,
-//     height: 50,
-//   },
-// });
-
-// export default SliderComponent;
-
 import React, { useState, useRef } from "react";
 import {
   StyleSheet,
@@ -188,7 +49,8 @@ const SliderComponent = () => {
               flexDirection: "row",
               width,
               justifyContent: "center",
-              width,
+              flex: 1,
+              alignItems: "center",
             }}
           >
             <TouchableOpacity
@@ -240,6 +102,7 @@ const SliderComponent = () => {
               flexDirection: "row",
               width,
               justifyContent: "center",
+              flex: 1,
             }}
           >
             <TouchableOpacity
@@ -286,7 +149,16 @@ const SliderComponent = () => {
         </View>
 
         <View style={styles.page2}>
-          <View style={{ gap: 15 }}>
+          <View
+            style={{
+              gap: 20,
+              flexDirection: "row",
+              width,
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+            }}
+          >
             <TouchableOpacity
               onPress={() => console.log("content 5")}
               style={[styles.content, styles.content5]}
@@ -329,7 +201,15 @@ const SliderComponent = () => {
             </TouchableOpacity>
           </View>
 
-          <View>
+          <View
+            style={{
+              gap: 20,
+              flexDirection: "row",
+              width,
+              justifyContent: "center",
+              flex: 1,
+            }}
+          >
             <TouchableOpacity
               onPress={() => console.log("content 7")}
               style={[styles.content, styles.content7]}
@@ -350,6 +230,10 @@ const SliderComponent = () => {
                 <Text style={styles.text}>ART</Text>
               </View>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.content, styles.content8]}
+            ></TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -374,19 +258,20 @@ const styles = StyleSheet.create({
 
   page: {
     width,
-    gap: 15,
+    flex: 1,
+    gap: 5,
   },
 
   page2: {
-    flexDirection: "row",
-    justifyContent: "center",
     width,
-    gap: 20,
+    gap: 5,
+    flex: 1,
   },
 
   content: {
     borderRadius: 20,
-    height: 112,
+    maxHeight: 112,
+    height: "90%",
     justifyContent: "flex-end",
     padding: 7,
   },
@@ -425,6 +310,11 @@ const styles = StyleSheet.create({
   content7: {
     backgroundColor: "green",
     width: 140,
+  },
+
+  content8: {
+    width: 175,
+    backgroundColor: "transparent",
   },
 
   dotContainer: {

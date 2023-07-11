@@ -3,9 +3,8 @@ import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 
-const Footer = () => {
+const Footer = ({ navigation }) => {
   return (
-    // <SafeAreaView style={styles.safeArea}>
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         <TouchableOpacity
@@ -32,6 +31,7 @@ const Footer = () => {
           style={styles.rightButton}
           onPress={() => {
             console.log("Gigamarket");
+            navigation.navigate("GigaMarketScreen");
           }}
         >
           <Text style={styles.text}>Gigamarket</Text>

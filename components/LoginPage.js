@@ -37,6 +37,11 @@ const LoginPage = ({ navigation }) => {
       return;
     }
 
+    if (phoneNumber === defaultPhoneNumber) {
+      setNumberChecker("Shkruaj Numrin!");
+      return;
+    }
+
     setNumberChecker(""); // Clear the warning message
     navigation.navigate("Main");
   };

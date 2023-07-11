@@ -6,13 +6,21 @@ import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
-const GigaMarketScreenHeader = () => {
+const GigaMarketScreenHeader = ({ navigation }) => {
   return (
     <View style={styles.headerContainer}>
-      <View style={styles.headerTextLeft}>
+      {/* <View style={styles.headerTextLeft}> */}
+      {/* <AntDesign name="left" size={24} color="white" /> */}
+      <TouchableOpacity
+        style={styles.headerTextLeft}
+        onPress={() => {
+          navigation.navigate("Main");
+        }}
+      >
         <AntDesign name="left" size={24} color="white" />
         <Text style={styles.gigamarketText}>Gigamarket</Text>
-      </View>
+      </TouchableOpacity>
+      {/* </View> */}
 
       <View style={styles.headerRight}>
         <TouchableOpacity style={styles.headerRightTouchable}>
@@ -41,7 +49,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     // backgroundColor: "red",
-    marginTop: 30,
+    // marginTop: 30,
   },
 
   headerTextLeft: {
@@ -57,7 +65,8 @@ const styles = StyleSheet.create({
   },
 
   headerRight: {
-    width: 150,
+    width: "40%",
+    maxWidth: 170,
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: 10,
   },

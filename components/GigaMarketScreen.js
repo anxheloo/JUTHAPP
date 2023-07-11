@@ -1,23 +1,32 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import SliderComponent from "./SliderComponent";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import GigamarketItemContainer from "./GigaMarketItemComponent";
 
-const GigaMarketScreen = () => {
+const GigaMarketScreen = ({ navigation }) => {
+  const { width, height } = Dimensions.get("window");
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <StatusBar style="auto"></StatusBar>
       <LinearGradient
-        style={styles.linearGradientContainer}
+        style={[styles.linearGradientContainer, { paddingTop: insets.top }]}
         colors={[
           "#55e1ce",
           "#00cfe0",
@@ -31,12 +40,19 @@ const GigaMarketScreen = () => {
           "#d555e1",
         ]}
       >
-        <GigaMarketScreenHeader></GigaMarketScreenHeader>
+        {/* <GigaMarketScreenHeader
+          navigation={navigation}
+        ></GigaMarketScreenHeader> */}
         <View style={styles.mainContent}>
           <View style={styles.swipeUp}>
+            <GigaMarketScreenHeader
+              navigation={navigation}
+            ></GigaMarketScreenHeader>
             <View style={styles.scrollContentHeader}>
               <Text style={styles.scrollContentHeaderText}> KATEGORITE</Text>
-              <Foundation name="info" size={30} color="white" />
+              <TouchableOpacity>
+                <Foundation name="info" size={30} color="white" />
+              </TouchableOpacity>
             </View>
 
             <View style={styles.sliderArea}>
@@ -50,12 +66,58 @@ const GigaMarketScreen = () => {
               <AntDesign name="rightcircleo" size={24} color="white" />
             </View>
 
-            <View style={styles.middleContent}>
-              {/* <SliderComponent></SliderComponent> */}
-            </View>
+            {/* <View style={styles.middleContent}> */}
+            <ScrollView
+              style={{
+                paddingHorizontal: 20,
+                paddingVertical: 5,
+                flex: 1,
+                width,
+              }}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+              <GigamarketItemContainer
+                onPress={() => console.log("container")}
+              ></GigamarketItemContainer>
+            </ScrollView>
+            {/* </View> */}
 
-            {/* <View style={styles.buttonContainer}> */}
-            <View style={styles.footerButtons}>
+            <View
+              style={[
+                styles.footerButtons,
+                {
+                  height: 60 + insets.bottom,
+                },
+              ]}
+            >
               <TouchableOpacity style={styles.buttons}>
                 <FontAwesome name="user-o" size={35} color="white" />
               </TouchableOpacity>
@@ -67,7 +129,7 @@ const GigaMarketScreen = () => {
           </View>
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -81,19 +143,16 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    // backgroundColor: "black",
     flex: 1,
   },
 
   swipeUp: {
     flex: 1,
+    marginBottom: 5,
   },
 
   sliderArea: {
-    // backgroundColor: "red",
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
 
   scrollContent: {
@@ -118,24 +177,17 @@ const styles = StyleSheet.create({
 
   middleContent: {
     flex: 1,
-    // backgroundColor: "white",
+    backgroundColor: "white",
   },
 
   footerButtons: {
-    height: 65,
-    paddingVertical: 5,
-    marginBottom: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 30,
-    // backgroundColor: "red",
   },
 
-  buttons: {
-    // padding: 5,
-    // margin: 5,
-  },
+  buttons: {},
 });
 
 export default GigaMarketScreen;

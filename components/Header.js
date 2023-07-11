@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: "4%",
-    marginTop: 45,
+    // marginTop: 45,
   },
 
   logoContainer: {

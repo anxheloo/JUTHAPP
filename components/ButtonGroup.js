@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginTop: "3%",
     width: "90%",
     height: "100%",
-    paddingHorizontal: "5%",
+    paddingHorizontal: 15,
     backgroundColor: "rgba(255,255,255,0.2)",
     borderRadius: 30,
   },

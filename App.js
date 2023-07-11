@@ -5,31 +5,26 @@ import MainComponent from "./components/MainComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GigaMarketScreen from "./components/GigaMarketScreen";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
-import GigaMarketScreenHeader from "./components/GigaMarketScreenHeader";
+// import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator
-    //     screenOptions={{
-    //       headerShown: false,
-    //     }}
-    //   >
-    //     <Stack.Screen name="Login" component={LoginPage} />
-    //     <Stack.Screen name="Main" component={MainComponent} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* <GigaMarketScreenHeader></GigaMarketScreenHeader> */}
-      <GigaMarketScreen></GigaMarketScreen>
-    </SafeAreaView>
-
-    // <LoginPage></LoginPage>
+    <NavigationContainer>
+      <SafeAreaProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Main" component={MainComponent} />
+          <Stack.Screen name="GigaMarketScreen" component={GigaMarketScreen} />
+        </Stack.Navigator>
+      </SafeAreaProvider>
+    </NavigationContainer>
   );
 };
 
