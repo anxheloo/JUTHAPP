@@ -5,6 +5,9 @@ import MainComponent from "./components/MainComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GigaMarketScreen from "./components/GigaMarketScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import GigaMarketScreenHeader from "./components/GigaMarketScreenHeader";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +24,10 @@ const App = () => {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-    <GigaMarketScreen></GigaMarketScreen>
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* <GigaMarketScreenHeader></GigaMarketScreenHeader> */}
+      <GigaMarketScreen></GigaMarketScreen>
+    </SafeAreaView>
 
     // <LoginPage></LoginPage>
   );

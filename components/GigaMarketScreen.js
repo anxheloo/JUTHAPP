@@ -15,6 +15,7 @@ import SliderComponent from "./SliderComponent";
 const GigaMarketScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar style="auto"></StatusBar>
       <LinearGradient
         style={styles.linearGradientContainer}
         colors={[
@@ -30,7 +31,6 @@ const GigaMarketScreen = () => {
           "#d555e1",
         ]}
       >
-        <StatusBar style="auto"></StatusBar>
         <GigaMarketScreenHeader></GigaMarketScreenHeader>
         <View style={styles.mainContent}>
           <View style={styles.swipeUp}>
@@ -39,7 +39,9 @@ const GigaMarketScreen = () => {
               <Foundation name="info" size={30} color="white" />
             </View>
 
-            <SliderComponent></SliderComponent>
+            <View style={styles.sliderArea}>
+              <SliderComponent></SliderComponent>
+            </View>
           </View>
 
           <View style={styles.scrollContent}>
@@ -84,8 +86,14 @@ const styles = StyleSheet.create({
   },
 
   swipeUp: {
-    // backgroundColor: "white",
     flex: 1,
+  },
+
+  sliderArea: {
+    // backgroundColor: "red",
+    flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 
   scrollContent: {

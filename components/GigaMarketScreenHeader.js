@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 const GigaMarketScreenHeader = () => {
   return (
@@ -39,14 +41,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     // backgroundColor: "red",
+    marginTop: 30,
   },
 
   headerTextLeft: {
-    // width: "40%",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    // backgroundColor: "red",
     padding: 5,
   },
 
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
     width: 150,
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: 10,
-    // backgroundColor: "red",
   },
 
   headerRightTouchable: {

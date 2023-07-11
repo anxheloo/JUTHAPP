@@ -182,33 +182,180 @@ const SliderComponent = () => {
         scrollEventThrottle={16}
       >
         <View style={styles.page}>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
+          <View
+            style={{
+              gap: 20,
+              flexDirection: "row",
+              width,
+              justifyContent: "center",
+              width,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => console.log("content 1")}
+              style={[styles.content, styles.content1]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>VODAFONE</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => console.log("content 2")}
+              style={[styles.content, styles.content2]}
+            >
+              <View style={styles.insideContent2}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>DIGITAL</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              gap: 20,
+              flexDirection: "row",
+              width,
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => console.log("content 3")}
+              style={[styles.content, styles.content3]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>TEKNOLOGJI</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => console.log("content 4")}
+              style={[styles.content, styles.content4]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>EDUKIM</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.page}>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-        </View>
+        <View style={styles.page2}>
+          <View style={{ gap: 15 }}>
+            <TouchableOpacity
+              onPress={() => console.log("content 5")}
+              style={[styles.content, styles.content5]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>MODE</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => console.log("content 6")}
+              style={[styles.content, styles.content6]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>TJETER</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.page}>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-        </View>
-
-        <View style={styles.page}>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-        </View>
-
-        <View style={styles.page}>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
-          <TouchableOpacity style={styles.content}></TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              onPress={() => console.log("content 7")}
+              style={[styles.content, styles.content7]}
+            >
+              <View style={styles.insideContent1}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/images/unnamed.png")}
+                ></Image>
+                <View
+                  style={{
+                    borderBottomColor: "white",
+                    borderBottomWidth: 1,
+                    width: 15,
+                    marginTop: 5,
+                  }}
+                />
+                <Text style={styles.text}>ART</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
 
       <View style={styles.dotContainer}>
-        {[...Array(5)].map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.dot, currentPage === index && styles.activeDot]}
@@ -222,24 +369,69 @@ const SliderComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
-    marginBottom: 20,
+    flex: 1,
   },
+
   page: {
     width,
+    gap: 15,
+  },
+
+  page2: {
     flexDirection: "row",
+    justifyContent: "center",
+    width,
+    gap: 20,
   },
+
   content: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    height: 100,
-    width: 150,
-    // width: "30%",
-    margin: 10,
+    borderRadius: 20,
+    height: 112,
+    justifyContent: "flex-end",
+    padding: 7,
   },
+
+  content1: {
+    // flex: 1,
+    backgroundColor: "red",
+    width: 175,
+  },
+
+  content2: {
+    backgroundColor: "orange",
+    width: 140,
+  },
+
+  content3: {
+    backgroundColor: "blue",
+    width: 140,
+  },
+
+  content4: {
+    backgroundColor: "yellow",
+    width: 175,
+  },
+
+  content5: {
+    backgroundColor: "pink",
+    width: 175,
+  },
+
+  content6: {
+    backgroundColor: "purple",
+    width: 140,
+  },
+
+  content7: {
+    backgroundColor: "green",
+    width: 140,
+  },
+
   dotContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "flex-end",
+    padding: 5,
   },
   dot: {
     width: 8,
@@ -250,6 +442,18 @@ const styles = StyleSheet.create({
   },
   activeDot: {
     backgroundColor: "white",
+  },
+
+  image: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+  },
+
+  text: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 
