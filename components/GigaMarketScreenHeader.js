@@ -1,26 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
 
-const GigaMarketScreenHeader = ({ navigation }) => {
+const GigaMarketScreenHeader = (props) => {
+  const handleNavigation = () => {
+    props.navigation();
+  };
+
   return (
     <View style={styles.headerContainer}>
-      {/* <View style={styles.headerTextLeft}> */}
-      {/* <AntDesign name="left" size={24} color="white" /> */}
       <TouchableOpacity
         style={styles.headerTextLeft}
-        onPress={() => {
-          navigation.navigate("Main");
-        }}
+        onPress={handleNavigation}
       >
         <AntDesign name="left" size={24} color="white" />
         <Text style={styles.gigamarketText}>Gigamarket</Text>
       </TouchableOpacity>
-      {/* </View> */}
 
       <View style={styles.headerRight}>
         <TouchableOpacity style={styles.headerRightTouchable}>

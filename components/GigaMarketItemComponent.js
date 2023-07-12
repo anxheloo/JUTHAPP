@@ -1,15 +1,27 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 const GigamarketItemContainer = (props) => {
   const { width, height } = Dimensions.get("window");
   console.log(width, height);
 
+  const handelClick = () => {
+    // props.onPress, props.navigation.navigate("ItemScreen");
+    props.onPress();
+  };
+
   return (
     <TouchableOpacity
-      style={{ height: 270, width: 145, maxHeight: 300, marginRight: 20 }}
-      onPress={props.onPress}
+      style={{ flex: 1, paddingVertical: 5, marginRight: 20, maxHeight: 280 }}
+      onPress={handelClick}
     >
       <View style={styles.mainContainer}>
         <View
@@ -77,7 +89,7 @@ const GigamarketItemContainer = (props) => {
           }}
         >
           <View>
-            <Text style={{ fontWeight: "bold", paddingVertical: 5 }}>
+            <Text style={{ fontWeight: "bold", paddingVertical: 2 }}>
               200MB
             </Text>
             <Text style={{ fontSize: 11 }}>
@@ -91,11 +103,12 @@ const GigamarketItemContainer = (props) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              padding: 10,
+              padding: 6,
+              // backgroundColor: "blue",
             }}
           >
             <Image
-              style={{ width: 15, height: 15, borderRadius: 17 }}
+              style={{ width: 15, height: 15, borderRadius: 20 }}
               source={require("../assets/images/unnamed.png")}
             ></Image>
             <Text style={{ fontWeight: "bold" }}>80</Text>
@@ -108,6 +121,7 @@ const GigamarketItemContainer = (props) => {
                 color: "black",
                 fontWeight: "bold",
                 alignSelf: "center",
+                // backgroundColor: "red",
               }}
             >
               Sot
@@ -124,9 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 17,
     width: 145,
-    maxHeight: 270,
-    backgroundColor: "white",
-    marginRight: 20,
   },
 
   subContainer: {

@@ -115,6 +115,7 @@ const TabViewExample = () => {
         flexWrap: "nowrap", // Prevent text wrapping
         width: "100%", // Occupy full available width
         paddingHorizontal: 10,
+        // backgroundColor: "red",
       }}
       style={{
         backgroundColor: "transparent",

@@ -6,8 +6,9 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 import ViewSlider from "react-native-view-slider";
 
 const { width, height } = Dimensions.get("window");

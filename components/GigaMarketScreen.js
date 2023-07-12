@@ -6,10 +6,10 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
 import { FontAwesome } from "@expo/vector-icons";
@@ -22,6 +22,15 @@ import GigamarketItemContainer from "./GigaMarketItemComponent";
 const GigaMarketScreen = ({ navigation }) => {
   const { width, height } = Dimensions.get("window");
   const insets = useSafeAreaInsets();
+
+  const handleNavigation = () => {
+    navigation.goBack();
+  };
+
+  const handleItemPress = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <View style={styles.safeArea}>
       <StatusBar style="auto"></StatusBar>
@@ -40,17 +49,14 @@ const GigaMarketScreen = ({ navigation }) => {
           "#d555e1",
         ]}
       >
-        {/* <GigaMarketScreenHeader
-          navigation={navigation}
-        ></GigaMarketScreenHeader> */}
         <View style={styles.mainContent}>
           <View style={styles.swipeUp}>
             <GigaMarketScreenHeader
-              navigation={navigation}
+              navigation={handleNavigation}
             ></GigaMarketScreenHeader>
             <View style={styles.scrollContentHeader}>
               <Text style={styles.scrollContentHeaderText}> KATEGORITE</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => console.log("info Button")}>
                 <Foundation name="info" size={30} color="white" />
               </TouchableOpacity>
             </View>
@@ -63,14 +69,16 @@ const GigaMarketScreen = ({ navigation }) => {
           <View style={styles.scrollContent}>
             <View style={styles.scrollContentHeader}>
               <Text style={styles.scrollContentHeaderText}> TE GJITHA</Text>
-              <AntDesign name="rightcircleo" size={24} color="white" />
+              <TouchableOpacity
+                onPress={() => console.log("right arrow Button")}
+              >
+                <AntDesign name="rightcircleo" size={24} color="white" />
+              </TouchableOpacity>
             </View>
 
-            {/* <View style={styles.middleContent}> */}
             <ScrollView
               style={{
                 paddingHorizontal: 20,
-                paddingVertical: 5,
                 flex: 1,
                 width,
               }}
@@ -78,34 +86,36 @@ const GigaMarketScreen = ({ navigation }) => {
               showsHorizontalScrollIndicator={false}
             >
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                // onPress={() => console.log("container1")}
+                // navigation={navigation}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
               <GigamarketItemContainer
-                onPress={() => console.log("container")}
+                onPress={() => handleItemPress("ItemScreen")}
               ></GigamarketItemContainer>
             </ScrollView>
             {/* </View> */}
@@ -118,10 +128,16 @@ const GigaMarketScreen = ({ navigation }) => {
                 },
               ]}
             >
-              <TouchableOpacity style={styles.buttons}>
+              <TouchableOpacity
+                style={styles.buttons}
+                onPress={() => console.log("user Button")}
+              >
                 <FontAwesome name="user-o" size={35} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttons}>
+              <TouchableOpacity
+                style={styles.buttons}
+                onPress={() => console.log("plus Button")}
+              >
                 <Ionicons name="add" size={55} color="white" />
               </TouchableOpacity>
             </View>
@@ -160,6 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+    // backgroundColor: "red",
   },
 
   scrollContentHeader: {
