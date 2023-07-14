@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "90%",
+    width: "40%",
   },
 
   middleBorders: {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     borderRightColor: "rgba(255,255,255,0.5)",
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.5)",
-    paddingHorizontal: "6%",
+    // paddingHorizontal: "6%",
   },
 
   button: {
@@ -92,6 +93,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
+    width: "100%",
+    paddingHorizontal: 5,
   },
 
   buttonText: {

@@ -114,8 +114,11 @@ const TabViewExample = () => {
         textTransform: "none",
         flexWrap: "nowrap", // Prevent text wrapping
         width: "100%", // Occupy full available width
-        paddingHorizontal: 10,
+        // paddingHorizontal: 5,
+        // alignItems: "center",
+        // justifyContent: "center",
         // backgroundColor: "red",
+        // paddingTop: 6, // Adjust this value to vertically center the label
       }}
       style={{
         backgroundColor: "transparent",

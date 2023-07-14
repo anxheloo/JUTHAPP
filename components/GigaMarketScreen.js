@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -19,7 +19,73 @@ import SliderComponent from "./SliderComponent";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GigamarketItemContainer from "./GigaMarketItemComponent";
 
+const productData = [
+  {
+    id: 0,
+    image: require("../assets/images/unnamed.png"),
+    mb: "200MB",
+    description:
+      "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
+    vcoins: 80,
+    offerDayValidity: "Sot",
+    screen: "ItemScreen",
+  },
+
+  {
+    id: 1,
+    image: require("../assets/images/unnamed.png"),
+    mb: "100MB",
+    description:
+      "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
+    vcoins: 40,
+    offerDayValidity: "Sot",
+    screen: "ItemScreen",
+  },
+
+  {
+    id: 2,
+    image: require("../assets/images/unnamed.png"),
+    mb: "1GB",
+    description:
+      "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
+    vcoins: 200,
+    offerDayValidity: "Sot",
+    screen: "ItemScreen",
+  },
+  {
+    id: 3,
+    image: require("../assets/images/unnamed.png"),
+    mb: "400MB",
+    description:
+      "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
+    vcoins: 100,
+    offerDayValidity: "Sot",
+    screen: "ItemScreen",
+  },
+  {
+    id: 4,
+    image: require("../assets/images/unnamed.png"),
+    mb: "1GB",
+    description:
+      "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
+    vcoins: 400,
+    offerDayValidity: "2 dite me pare",
+    screen: "ItemScreen",
+  },
+];
+
 const GigaMarketScreen = ({ navigation }) => {
+  const [myData, setMyData] = useState(productData);
+
+  const handleDelete = (id) => {
+    setMyData((currentDatas) => {
+      return currentDatas.filter((element) => {
+        return element.id !== id;
+      });
+    });
+    navigation.goBack();
+  };
+
   const { width, height } = Dimensions.get("window");
   const insets = useSafeAreaInsets();
 
@@ -27,8 +93,13 @@ const GigaMarketScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const handleItemPress = (screenName) => {
-    navigation.navigate(screenName);
+  const handleItemPress = (screenName, productId, product, handleDelete) => {
+    if (productId === 0) {
+      navigation.navigate(screenName, {
+        product,
+        handleDelete: () => handleDelete(productId),
+      });
+    }
   };
 
   return (
@@ -85,40 +156,21 @@ const GigaMarketScreen = ({ navigation }) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <GigamarketItemContainer
-                // onPress={() => console.log("container1")}
-                // navigation={navigation}
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
-              <GigamarketItemContainer
-                onPress={() => handleItemPress("ItemScreen")}
-              ></GigamarketItemContainer>
+              {myData.map((product) => (
+                <GigamarketItemContainer
+                  key={product.id}
+                  data={product}
+                  onPress={() =>
+                    handleItemPress(
+                      product.screen,
+                      product.id,
+                      product,
+                      handleDelete
+                    )
+                  }
+                ></GigamarketItemContainer>
+              ))}
             </ScrollView>
-            {/* </View> */}
 
             <View
               style={[
@@ -141,7 +193,6 @@ const GigaMarketScreen = ({ navigation }) => {
                 <Ionicons name="add" size={55} color="white" />
               </TouchableOpacity>
             </View>
-            {/* </View> */}
           </View>
         </View>
       </LinearGradient>

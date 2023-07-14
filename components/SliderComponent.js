@@ -261,12 +261,14 @@ const styles = StyleSheet.create({
     width,
     flex: 1,
     gap: 5,
+    paddingHorizontal: 5,
   },
 
   page2: {
     width,
     gap: 5,
     flex: 1,
+    paddingHorizontal: 5,
   },
 
   content: {

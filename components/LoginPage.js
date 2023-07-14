@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,11 +12,23 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
+import NetInfo from "@react-native-community/netinfo";
 
 const LoginPage = ({ navigation }) => {
   const defaultPhoneNumber = "+355 6 _ _ _ _ _ _ _ _";
   const [phoneNumber, setPhoneNumber] = useState(defaultPhoneNumber);
   const [numberChecker, setNumberChecker] = useState("");
+  const [isInternetConnected, setIsInternetConnected] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsInternetConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");
@@ -43,7 +55,16 @@ const LoginPage = ({ navigation }) => {
     }
 
     setNumberChecker(""); // Clear the warning message
-    navigation.navigate("Main");
+
+    if (isInternetConnected) {
+      navigation.navigate("Main");
+    } else {
+      Alert.alert(
+        "No Internet Connection",
+        "Please check your internet connection and try again."
+      );
+    }
+    // };
   };
 
   const dismissKeyboard = () => {

@@ -73,7 +73,7 @@ const GigamarketItemContainer = (props) => {
                 height: 45,
                 borderRadius: 10,
               }}
-              source={require("../assets/images/unnamed.png")}
+              source={props.data.image}
             ></Image>
           </View>
         </View>
@@ -90,12 +90,9 @@ const GigamarketItemContainer = (props) => {
         >
           <View>
             <Text style={{ fontWeight: "bold", paddingVertical: 2 }}>
-              200MB
+              {props.data.mb}
             </Text>
-            <Text style={{ fontSize: 11 }}>
-              Interneti i ketij produkti eshte i vlefshem per 24 ore ne
-              shpejtesite 3G/4G
-            </Text>
+            <Text style={{ fontSize: 11 }}>{props.data.description}</Text>
           </View>
 
           <View
@@ -111,7 +108,7 @@ const GigamarketItemContainer = (props) => {
               style={{ width: 15, height: 15, borderRadius: 20 }}
               source={require("../assets/images/unnamed.png")}
             ></Image>
-            <Text style={{ fontWeight: "bold" }}>80</Text>
+            <Text style={{ fontWeight: "bold" }}>{props.data.vcoins}</Text>
             <Text>VCoins</Text>
           </View>
 
@@ -124,7 +121,7 @@ const GigamarketItemContainer = (props) => {
                 // backgroundColor: "red",
               }}
             >
-              Sot
+              {props.data.offerDayValidity}
             </Text>
           </View>
         </View>

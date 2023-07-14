@@ -23,7 +23,7 @@ const OptionComponent = (props) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    width: "42%",
+    width: "43%",
     maxWidth: 250,
     height: 100,
     flexDirection: "row",
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     maxWidth: "95%",
+    flexWrap: "nowrap",
   },
 });
 
