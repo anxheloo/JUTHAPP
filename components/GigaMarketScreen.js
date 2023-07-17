@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -168,6 +168,7 @@ const GigaMarketScreen = ({ navigation }) => {
                       handleDelete
                     )
                   }
+                  // onPress={() => handleItemPress(product)}
                 ></GigamarketItemContainer>
               ))}
             </ScrollView>

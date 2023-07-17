@@ -15,7 +15,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import ImageSlider from "./ImageSlider";
-import { Swipeable } from "react-native-gesture-handler";
+import {
+  Swipeable,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 
 const ItemScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
@@ -25,8 +28,8 @@ const ItemScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const handleSwipeFromRight = () => {
-    handleDelete();
+  const handleSwipeFromRight = (product) => {
+    handleDelete(product.id);
   };
 
   const swipeableRef = useRef(null);
@@ -260,16 +263,18 @@ const ItemScreen = ({ navigation, route }) => {
                   </Text>
                 </TouchableOpacity>
 
-                <Swipeable
-                  renderRightActions={renderRightActions}
-                  ref={swipeableRef}
-                >
-                  <View style={styles.swipeableButton}>
-                    <Text style={styles.swipeableButtonText}>
-                      Swipe To Delete
-                    </Text>
-                  </View>
-                </Swipeable>
+                <GestureHandlerRootView>
+                  <Swipeable
+                    renderRightActions={renderRightActions}
+                    ref={swipeableRef}
+                  >
+                    <View style={styles.swipeableButton}>
+                      <Text style={styles.swipeableButtonText}>
+                        Swipe To Delete
+                      </Text>
+                    </View>
+                  </Swipeable>
+                </GestureHandlerRootView>
               </View>
             </View>
 
