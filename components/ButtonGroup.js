@@ -23,8 +23,7 @@ const ButtonGroup = () => {
             <Text style={styles.buttonText}>32282</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={[styles.buttonContainer, styles.middleBorders]}>
+        <View style={styles.middleBorders}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => console.log("Button 1")}
@@ -36,7 +35,7 @@ const ButtonGroup = () => {
             <Text style={styles.buttonText}>13.95 GB</Text>
           </TouchableOpacity>
         </View>
-
+        {/* styles.buttonContainer, */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginTop: "3%",
+    marginTop: 15,
     width: "90%",
     height: "100%",
     paddingHorizontal: 15,
@@ -76,8 +75,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    height: "90%",
-    width: "40%",
+    height: "85%",
+    width: "30%",
+    // backgroundColor: "red",
   },
 
   middleBorders: {
@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.5)",
     // paddingHorizontal: "6%",
+    width: "40%",
+    height: "85%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   button: {

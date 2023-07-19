@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GigaMarketScreen from "./components/GigaMarketScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ItemScreen from "./components/ItemScreen";
+import InternetPopup from "./components/InternetPopup";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ const App = () => {
     <NavigationContainer>
       <SafeAreaProvider>
         <Stack.Navigator
+          initialRouteName="Login"
           screenOptions={{
             headerShown: false,
           }}
@@ -24,6 +26,7 @@ const App = () => {
           <Stack.Screen name="ItemScreen" component={ItemScreen} />
         </Stack.Navigator>
       </SafeAreaProvider>
+      <InternetPopup></InternetPopup>
     </NavigationContainer>
   );
 };
