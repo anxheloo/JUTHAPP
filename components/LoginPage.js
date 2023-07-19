@@ -36,21 +36,29 @@ const LoginPage = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    const netInfoState = await NetInfo.fetch();
+    if (!netInfoState.isConnected) {
+      setShowInternetPopup(true);
+      return;
+    }
+
     if (phoneNumber.length < 14) {
       setNumberChecker("Numri shume i shkurter");
       return;
-    } else if (phoneNumber === defaultPhoneNumber) {
+    }
+
+    if (phoneNumber === defaultPhoneNumber) {
       setNumberChecker("Shkruaj Numrin!");
       return;
     }
 
     setNumberChecker(""); // Clear the warning message
 
-    const netInfoState = await NetInfo.fetch();
-    while (!netInfoState.isConnected) {
-      setShowInternetPopup(true);
-      return;
-    }
+    // const netInfoState = await NetInfo.fetch();
+    // if (!netInfoState.isConnected) {
+    //   setShowInternetPopup(true);
+    //   return;
+    // }
     // else {
     //   setShowInternetPopup(false); // Hide the popup if internet is connected
     //   navigation.navigate("Main");
