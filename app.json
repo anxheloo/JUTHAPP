@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anxheloo.Juth"
@@ -32,6 +30,8 @@
       "eas": {
         "projectId": "8f2a200e-1524-464f-b2e5-9daa61567094"
       }
-    }
+    },
+
+    "gestureEnabled": true
   }
 }

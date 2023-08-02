@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Animated,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -26,6 +27,8 @@ const ItemScreen = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const { product, handleDelete } = route.params;
   const scrollViewRef = useRef(null);
+  const swipeableRef = useRef(null);
+  const [swipeableOpen, setSwipeableOpen] = useState(false);
 
   const handleNavigation = () => {
     navigation.goBack();
@@ -38,8 +41,6 @@ const ItemScreen = ({ navigation, route }) => {
   const handleSwipeFromLeft = (product) => {
     handleDelete(product.id);
   };
-
-  const swipeableRef = useRef(null);
 
   const closeSwipeable = () => {
     swipeableRef.current.close();
@@ -129,13 +130,39 @@ const ItemScreen = ({ navigation, route }) => {
     </>
   );
 
-  const disableVerticalScroll = () => {
+  // const onSwipeableWillOpen = () => {
+  //   setSwipeableOpen(true);
+  //   scrollViewRef.current.setNativeProps({ scrollEnabled: false });
+  // };
+
+  // const onSwipeableWillClose = () => {
+  //   setSwipeableOpen(false);
+  //   scrollViewRef.current.setNativeProps({ scrollEnabled: true });
+  // };
+
+  const onSwipeableWillOpen = () => {
+    // setSwipeableOpen(true);
     scrollViewRef.current.setNativeProps({ scrollEnabled: false });
   };
 
-  const enableVerticalScroll = () => {
+  const onSwipeableWillClose = () => {
+    // setSwipeableOpen(false);
     scrollViewRef.current.setNativeProps({ scrollEnabled: true });
   };
+
+  // // Programmatically open the swipeable to the left
+  // const handleOpenLeftSwipeable = () => {
+  //   if (swipeableRef.current) {
+  //     swipeableRef.current.openLeft();
+  //   }
+  // };
+
+  // // Programmatically open the swipeable to the right
+  // const handleOpenRightSwipeable = () => {
+  //   if (swipeableRef.current) {
+  //     swipeableRef.current.openRight();
+  //   }
+  // };
 
   return (
     <View style={styles.safeArea}>
@@ -166,227 +193,216 @@ const ItemScreen = ({ navigation, route }) => {
             navigation={handleNavigation}
           ></GigaMarketScreenHeader>
 
-          <PanGestureHandler
-            onGestureEvent={({ nativeEvent }) => {
-              // Disable vertical scrolling if the swipeable button is being swiped
-              if (nativeEvent.translationX !== 0) {
-                disableVerticalScroll();
-              } else {
-                enableVerticalScroll();
-              }
-            }}
-            onHandlerStateChange={({ nativeEvent }) => {
-              // Enable vertical scrolling when the swipeable button is released
-              if (nativeEvent.state === State.END) {
-                enableVerticalScroll();
-              }
-            }}
+          <ScrollView
+            ref={scrollViewRef}
+            nestedScrollEnabled={false}
+            style={{ flex: 1 }}
           >
-            <ScrollView
-              ref={scrollViewRef}
-              nestedScrollEnabled={false}
-              style={{ flex: 1 }}
-            >
-              <View style={{ paddingVertical: 10 }}>
-                <ImageSlider images={[product.image]}></ImageSlider>
+            <View style={{ paddingVertical: 10 }}>
+              <ImageSlider images={[product.image]}></ImageSlider>
+            </View>
+
+            <View style={{ paddingHorizontal: 25 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderBottomWidth: 1,
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  paddingBottom: 30,
+                  paddingTop: 10,
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "white" }}>Emri</Text>
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {product.mb}
+                </Text>
               </View>
 
-              <View style={{ paddingHorizontal: 25 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderBottomWidth: 1,
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  paddingBottom: 30,
+                  paddingTop: 10,
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "white" }}>Pagesa</Text>
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                     alignItems: "center",
-                    borderBottomWidth: 1,
-                    borderBottomColor: "rgba(255,255,255,0.5)",
-                    paddingBottom: 30,
-                    paddingTop: 10,
                   }}
                 >
-                  <Text style={{ fontSize: 20, color: "white" }}>Emri</Text>
-                  <Text style={{ fontSize: 20, color: "white" }}>
-                    {product.mb}
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottomWidth: 1,
-                    borderBottomColor: "rgba(255,255,255,0.5)",
-                    paddingBottom: 30,
-                    paddingTop: 10,
-                  }}
-                >
-                  <Text style={{ fontSize: 20, color: "white" }}>Pagesa</Text>
-                  <View
+                  <Text style={{ fontSize: 20, color: "white" }}>VCoins</Text>
+                  <Image
                     style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                      alignItems: "center",
+                      height: 20,
+                      width: 20,
+                      borderRadius: 20,
+                      marginLeft: 12,
+                    }}
+                    source={require("../assets/images/unnamed.png")}
+                  ></Image>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderBottomWidth: 1,
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  paddingBottom: 30,
+                  paddingTop: 10,
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "white" }}>Cmimi</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontSize: 18, color: "white" }}>
+                    {product.vcoins}
+                  </Text>
+                  <Text
+                    style={{
+                      borderRadius: 20,
+                      marginLeft: 10,
+                      fontSize: 18,
+                      color: "white",
                     }}
                   >
-                    <Text style={{ fontSize: 20, color: "white" }}>VCoins</Text>
-                    <Image
-                      style={{
-                        height: 20,
-                        width: 20,
-                        borderRadius: 20,
-                        marginLeft: 12,
-                      }}
-                      source={require("../assets/images/unnamed.png")}
-                    ></Image>
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottomWidth: 1,
-                    borderBottomColor: "rgba(255,255,255,0.5)",
-                    paddingBottom: 30,
-                    paddingTop: 10,
-                  }}
-                >
-                  <Text style={{ fontSize: 20, color: "white" }}>Cmimi</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{ fontSize: 18, color: "white" }}>
-                      {product.vcoins}
-                    </Text>
-                    <Text
-                      style={{
-                        borderRadius: 20,
-                        marginLeft: 10,
-                        fontSize: 18,
-                        color: "white",
-                      }}
-                    >
-                      VCoins
-                    </Text>
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottomWidth: 1,
-                    borderBottomColor: "rgba(255,255,255,0.5)",
-                    paddingBottom: 30,
-                    paddingTop: 10,
-                  }}
-                >
-                  <Text style={{ fontSize: 20, color: "white" }}>
-                    Publikuar
-                  </Text>
-                  <Text style={{ fontSize: 20, color: "white" }}>
-                    {product.offerDayValidity}
+                    VCoins
                   </Text>
                 </View>
               </View>
 
               <View
                 style={{
-                  marginTop: 15,
-                  paddingVertical: 5,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderBottomWidth: 1,
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  paddingBottom: 30,
+                  paddingTop: 10,
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "white" }}>Publikuar</Text>
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {product.offerDayValidity}
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                marginTop: 15,
+                paddingVertical: 5,
+                paddingHorizontal: 25,
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 17 }}>
+                {product.description}
+              </Text>
+
+              <View>
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 270,
+                    height: 60,
+                    backgroundColor: "green",
+                    marginTop: 30,
+                    borderRadius: 17,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingHorizontal: 5,
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 18 }}>
+                    Kontakto +355 69 24 678 90
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    maxWidth: 200,
+                    height: 60,
+                    backgroundColor: "orange",
+                    marginTop: 10,
+                    borderRadius: 17,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingHorizontal: 5,
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 20 }}>
+                    BLI ME VCOINS
+                  </Text>
+                </TouchableOpacity>
+
+                <GestureHandlerRootView>
+                  <Swipeable
+                    enableTrackpadTwoFingerGesture={1}
+                    renderLeftActions={renderLeftActions}
+                    renderRightActions={renderRightActions}
+                    ref={swipeableRef}
+                    rightThreshold={50}
+                    leftThreshold={50}
+                    onActivated={onSwipeableWillOpen}
+                    // onEnded={onSwipeableWillClose}
+                    onPress={() => {
+                      scrollViewRef.current.setNativeProps({
+                        scrollEnabled: false,
+                      });
+                    }}
+                    onSwipeableClose={onSwipeableWillClose}
+                  >
+                    <View style={styles.swipeableButton}>
+                      <Text style={styles.swipeableButtonText}>
+                        Swipe To Delete
+                      </Text>
+                    </View>
+                  </Swipeable>
+                </GestureHandlerRootView>
+              </View>
+            </View>
+
+            <View
+              style={{
+                width: "100%",
+                height: 400,
+                backgroundColor: "#0f1525",
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                marginTop: 20,
+              }}
+            >
+              <View
+                style={{
+                  height: 50,
+                  justifyContent: "center",
                   paddingHorizontal: 25,
                 }}
               >
-                <Text style={{ color: "white", fontSize: 17 }}>
-                  {product.description}
-                </Text>
-
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      maxWidth: 270,
-                      height: 60,
-                      backgroundColor: "green",
-                      marginTop: 30,
-                      borderRadius: 17,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      paddingHorizontal: 5,
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 18 }}>
-                      Kontakto +355 69 24 678 90
-                    </Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      maxWidth: 200,
-                      height: 60,
-                      backgroundColor: "orange",
-                      marginTop: 10,
-                      borderRadius: 17,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      paddingHorizontal: 5,
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      BLI ME VCOINS
-                    </Text>
-                  </TouchableOpacity>
-
-                  <GestureHandlerRootView>
-                    <Swipeable
-                      onPressIn={disableVerticalScroll} // Disable scrolling when pressed
-                      onPressOut={enableVerticalScroll} // Enable scrolling when released
-                      enableTrackpadTwoFingerGesture={1}
-                      renderLeftActions={renderLeftActions}
-                      renderRightActions={renderRightActions}
-                      ref={swipeableRef}
-                    >
-                      <View style={styles.swipeableButton}>
-                        <Text style={styles.swipeableButtonText}>
-                          Swipe To Delete
-                        </Text>
-                      </View>
-                    </Swipeable>
-                  </GestureHandlerRootView>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  width: "100%",
-                  height: 400,
-                  backgroundColor: "#0f1525",
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15,
-                  marginTop: 20,
-                }}
-              >
-                <View
-                  style={{
-                    height: 50,
-                    justifyContent: "center",
-                    paddingHorizontal: 25,
-                  }}
+                <Text
+                  style={{ color: "white", fontSize: 23, letterSpacing: -1 }}
                 >
-                  <Text
-                    style={{ color: "white", fontSize: 23, letterSpacing: -1 }}
-                  >
-                    PRODUKTE TE NGJASHME
-                  </Text>
-                </View>
+                  PRODUKTE TE NGJASHME
+                </Text>
               </View>
-            </ScrollView>
-          </PanGestureHandler>
+            </View>
+          </ScrollView>
         </View>
 
         <View

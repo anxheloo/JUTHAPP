@@ -7,6 +7,7 @@ import GigaMarketScreen from "./components/GigaMarketScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ItemScreen from "./components/ItemScreen";
 import InternetPopup from "./components/InternetPopup";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
 
