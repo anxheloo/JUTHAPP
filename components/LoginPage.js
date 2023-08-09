@@ -9,7 +9,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
-  // Modal,
+  Alert,
+  ActivityIndicator,
+  Modal,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -17,6 +19,8 @@ import NetInfo from "@react-native-community/netinfo";
 import InternetPopup from "./InternetPopup";
 // import { MaterialIcons } from "@expo/vector-icons";
 // import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginPage = ({ navigation }) => {
   const inputRef = useRef(null);
@@ -24,6 +28,8 @@ const LoginPage = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState(defaultPhoneNumber);
   const [numberChecker, setNumberChecker] = useState("");
   const [showInternetPopup, setShowInternetPopup] = useState(false); // New state for showing the InternetPopup
+  const [loader, setLoader] = useState(false);
+  const [isThisYourNumber, setIsThisYourNumber] = useState(false);
 
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");
@@ -35,6 +41,7 @@ const LoginPage = ({ navigation }) => {
     setPhoneNumber(text);
   };
 
+  /*
   const handleSubmit = async () => {
     const netInfoState = await NetInfo.fetch();
     if (!netInfoState.isConnected) {
@@ -66,6 +73,87 @@ const LoginPage = ({ navigation }) => {
 
     // setShowInternetPopup(false);
     navigation.navigate("Main");
+  };
+  */
+
+  const login = async (values) => {
+    setLoader(true);
+    const formattedPhoneNumber = values.replace(/\s/g, "");
+    console.log(values);
+    console.log(formattedPhoneNumber);
+    // console.log(typeof formattedPhoneNumber);
+
+    const netInfoState = await NetInfo.fetch();
+    if (!netInfoState.isConnected) {
+      setShowInternetPopup(true);
+      return;
+    }
+
+    if (phoneNumber.length < 14) {
+      setNumberChecker("Numri shume i shkurter");
+      return;
+    }
+
+    if (phoneNumber === defaultPhoneNumber) {
+      setNumberChecker("Shkruaj Numrin!");
+      return;
+    }
+
+    setNumberChecker("");
+
+    try {
+      const endpoint = "http://192.168.1.236:3000/api/login";
+      const data = {
+        phonenumber: formattedPhoneNumber,
+      };
+      const response = await axios.post(endpoint, data);
+
+      if (response.status === 200) {
+        setLoader(false);
+        await AsyncStorage.setItem(
+          `user${response.data._id}`,
+          JSON.stringify(response.data)
+        );
+
+        console.log(response.data);
+
+        await AsyncStorage.setItem("id", JSON.stringify(response.data._id));
+        console.log(response.data._id);
+        navigation.navigate("Main");
+      } else {
+        Alert.alert("Error Loggin in", "Please provide valid credentials", [
+          {
+            text: "Cancel",
+            onPress: () => console.log(),
+          },
+          {
+            text: "Continue",
+            onPress: () => console.log(),
+          },
+          // { defaultIndex: 1 },
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+
+      Alert.alert(
+        "Error",
+        "Oops, Error loggin in try again with correct credentials",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log(),
+          },
+          {
+            text: "Continue",
+            onPress: () => console.log(),
+          },
+          // { defaultIndex: 1 },
+        ]
+      );
+    } finally {
+      setLoader(false);
+    }
   };
 
   // const handlePopupClose = () => {
@@ -120,15 +208,102 @@ const LoginPage = ({ navigation }) => {
           <View>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={handleSubmit}
+              onPress={() => setIsThisYourNumber(true)}
+
+              // login(phoneNumber)
             >
-              <Text style={styles.buttonText}>HYR</Text>
+              {loader === false ? (
+                <Text style={styles.buttonText}>HYR</Text>
+              ) : (
+                <ActivityIndicator></ActivityIndicator>
+              )}
             </TouchableOpacity>
+
+            <Text
+              style={{ color: "white", textAlign: "center", padding: 10 }}
+              onPress={() => {
+                navigation.navigate("Registration");
+              }}
+            >
+              Regjistrohu
+            </Text>
           </View>
         </View>
 
         {/* Show the InternetPopup when showInternetPopup is true */}
         {showInternetPopup && <InternetPopup />}
+
+        {isThisYourNumber && (
+          <Modal
+            visible={isThisYourNumber}
+            transparent
+            animationType="fade"
+            // style={{ height: 300, width: "80%" }}
+          >
+            <View style={styles.centeredContainer}>
+              <View style={styles.popUpContainer}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 24,
+                    marginTop: 30,
+                    paddingHorizontal: 20,
+                    textAlign: "center",
+                    color: "gray",
+                  }}
+                >
+                  A eshte ky numri yt i telefonit?
+                </Text>
+
+                <Text
+                  style={{ fontSize: 25, color: "blue", textAlign: "center" }}
+                >
+                  {phoneNumber}
+                </Text>
+
+                <View style={{ paddingHorizontal: 20 }}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "regular",
+                      textAlign: "center",
+                    }}
+                    numberOfLines={3}
+                  >
+                    Duke shtypur vazhdo ti pranon te marresh nje SMS me kodin e
+                    verifikimit
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    width: "100%",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.anulloBtn}
+                    onPress={() => {
+                      setIsThisYourNumber(false);
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Anullo</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.vazhdoBtn}
+                    onPress={() => {
+                      login(phoneNumber);
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Vazhdo</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
       </LinearGradient>
     </TouchableWithoutFeedback>
   );
@@ -185,6 +360,44 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     paddingBottom: 10,
+  },
+
+  centeredContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  popUpContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    paddingVertical: 25,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "space-between",
+    // height: "72%",
+    // width: "90%",
+    width: "85%",
+    height: windowHeight / 2 + 50,
+    // position: "relative",
+  },
+
+  anulloBtn: {
+    backgroundColor: "red", // Set your desired button background color
+    paddingVertical: 10,
+    alignItems: "center",
+    borderRadius: 16,
+    width: 110,
+    // marginTop: windowHeight * 0.15,
+  },
+
+  vazhdoBtn: {
+    backgroundColor: "#25a8dd", // Set your desired button background color
+    paddingVertical: 10,
+    alignItems: "center",
+    borderRadius: 16,
+    width: 110,
+    // marginTop: windowHeight * 0.15,
   },
 
   // popUpContainer: {

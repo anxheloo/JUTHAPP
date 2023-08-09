@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -14,10 +14,34 @@ import TabViewExample from "./TabViewExample";
 import Footer from "./Footer";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MainComponent = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
+  const [userLogin, setUserLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    checkExistingUser();
+  }, []);
+
+  const checkExistingUser = async () => {
+    const id = await AsyncStorage.getItem("id");
+    const userId = `user${JSON.parse(id)}`;
+
+    try {
+      const currentUser = await AsyncStorage.getItem(userId);
+
+      if (currentUser !== null) {
+        const parsedData = JSON.parse(currentUser);
+        setUserData(parsedData);
+        setUserLogin(true);
+      }
+    } catch (error) {
+      console.log("Error retrieving the data: ", error);
+    }
+  };
 
   // const handleScroll = (event) => {
   //   const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -66,7 +90,7 @@ const MainComponent = ({ navigation }) => {
         ]}
       >
         <StatusBar style="auto"></StatusBar>
-        <Header />
+        <Header userData={userData} />
         <ScrollView
           // onScroll={handleScroll}
           contentContainerStyle={styles.scrollContainer}

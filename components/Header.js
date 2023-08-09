@@ -5,7 +5,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Header = () => {
+const Header = ({ userData }) => {
+  console.log(userData);
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.logoContainer}>
@@ -25,7 +27,12 @@ const Header = () => {
           style={styles.profileContainer}
           onPress={() => console.log("Profile Opened")}
         >
-          <Text>Hi Nixho</Text>
+          {userData ? (
+            <Text>Hi {userData.firstname}</Text>
+          ) : (
+            <Text>Hi Nixho</Text>
+          )}
+
           <Image
             style={styles.profileImage}
             source={require("../assets/images/unnamed.png")}
