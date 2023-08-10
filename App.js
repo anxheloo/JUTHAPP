@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import ItemScreen from "./components/ItemScreen";
 import InternetPopup from "./components/InternetPopup";
 import Registration from "./components/Registration";
+import KodiVerifikimit from "./components/KodiVerifikimit";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
           <Stack.Screen name="GigaMarketScreen" component={GigaMarketScreen} />
           <Stack.Screen name="ItemScreen" component={ItemScreen} />
           <Stack.Screen name="Registration" component={Registration} />
+          <Stack.Screen name="KodiVerifikimit" component={KodiVerifikimit} />
         </Stack.Navigator>
       </SafeAreaProvider>
       <InternetPopup></InternetPopup>

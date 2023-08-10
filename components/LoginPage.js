@@ -41,40 +41,9 @@ const LoginPage = ({ navigation }) => {
     setPhoneNumber(text);
   };
 
-  /*
-  const handleSubmit = async () => {
-    const netInfoState = await NetInfo.fetch();
-    if (!netInfoState.isConnected) {
-      setShowInternetPopup(true);
-      return;
-    }
-
-    if (phoneNumber.length < 14) {
-      setNumberChecker("Numri shume i shkurter");
-      return;
-    }
-
-    if (phoneNumber === defaultPhoneNumber) {
-      setNumberChecker("Shkruaj Numrin!");
-      return;
-    }
-
-    setNumberChecker(""); // Clear the warning message
-
-    // const netInfoState = await NetInfo.fetch();
-    // if (!netInfoState.isConnected) {
-    //   setShowInternetPopup(true);
-    //   return;
-    // }
-    // else {
-    //   setShowInternetPopup(false); // Hide the popup if internet is connected
-    //   navigation.navigate("Main");
-    // }
-
-    // setShowInternetPopup(false);
-    navigation.navigate("Main");
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
   };
-  */
 
   const login = async (values) => {
     setLoader(true);
@@ -119,7 +88,7 @@ const LoginPage = ({ navigation }) => {
 
         await AsyncStorage.setItem("id", JSON.stringify(response.data._id));
         console.log(response.data._id);
-        navigation.navigate("Main");
+        navigation.navigate("KodiVerifikimit");
       } else {
         Alert.alert("Error Loggin in", "Please provide valid credentials", [
           {
@@ -154,14 +123,6 @@ const LoginPage = ({ navigation }) => {
     } finally {
       setLoader(false);
     }
-  };
-
-  // const handlePopupClose = () => {
-  //   setShowInternetPopup(false);
-  // };
-
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
   };
 
   return (
@@ -209,14 +170,8 @@ const LoginPage = ({ navigation }) => {
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => setIsThisYourNumber(true)}
-
-              // login(phoneNumber)
             >
-              {loader === false ? (
-                <Text style={styles.buttonText}>HYR</Text>
-              ) : (
-                <ActivityIndicator></ActivityIndicator>
-              )}
+              <Text style={styles.buttonText}>HYR</Text>
             </TouchableOpacity>
 
             <Text
@@ -294,7 +249,7 @@ const LoginPage = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.vazhdoBtn}
                     onPress={() => {
-                      login(phoneNumber);
+                      navigation.navigate("KodiVerifikimit", phoneNumber);
                     }}
                   >
                     <Text style={styles.buttonText}>Vazhdo</Text>
