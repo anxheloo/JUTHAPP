@@ -36,7 +36,7 @@ const LoginPage = ({ navigation }) => {
   };
 
   const handlePhoneNumberChange = (text) => {
-    const formattedNumber = text.replace(/\D/g, ""); // Remove all non-digit characters
+    // const formattedNumber = text.replace(/\D/g, ""); // Remove all non-digit characters
     // .slice(0, 8); // Limit the length to 8 digits
     setPhoneNumber(text);
   };
@@ -45,30 +45,34 @@ const LoginPage = ({ navigation }) => {
     Keyboard.dismiss();
   };
 
+  const handleLogin = async () => {
+    try {
+      // Call the login function with the user's phone number
+      await login(phoneNumber);
+      console.log("This is phoneNumber from handleLogin", phoneNumber);
+      // Navigate to the next page after successful login
+      navigation.navigate("KodiVerifikimit", { phoneNumber: phoneNumber });
+    } catch (error) {
+      // Handle errors
+      console.error("Login error:", error);
+    }
+  };
+
   const login = async (values) => {
     setLoader(true);
     const formattedPhoneNumber = values.replace(/\s/g, "");
-    console.log(values);
-    console.log(formattedPhoneNumber);
-    // console.log(typeof formattedPhoneNumber);
+    console.log("THIS IS values: ", values);
+    console.log("THIS IS formattedPhoneNumber", formattedPhoneNumber);
+    console.log(
+      "THIS IS typeof formattedPhoneNumber",
+      typeof formattedPhoneNumber
+    );
 
     const netInfoState = await NetInfo.fetch();
     if (!netInfoState.isConnected) {
       setShowInternetPopup(true);
       return;
     }
-
-    if (phoneNumber.length < 14) {
-      setNumberChecker("Numri shume i shkurter");
-      return;
-    }
-
-    if (phoneNumber === defaultPhoneNumber) {
-      setNumberChecker("Shkruaj Numrin!");
-      return;
-    }
-
-    setNumberChecker("");
 
     try {
       const endpoint = "http://192.168.1.236:3000/api/login";
@@ -79,16 +83,7 @@ const LoginPage = ({ navigation }) => {
 
       if (response.status === 200) {
         setLoader(false);
-        await AsyncStorage.setItem(
-          `user${response.data._id}`,
-          JSON.stringify(response.data)
-        );
-
-        console.log(response.data);
-
-        await AsyncStorage.setItem("id", JSON.stringify(response.data._id));
-        console.log(response.data._id);
-        navigation.navigate("KodiVerifikimit");
+        console.log("THIS is response.data: ", response.data);
       } else {
         Alert.alert("Error Loggin in", "Please provide valid credentials", [
           {
@@ -123,6 +118,28 @@ const LoginPage = ({ navigation }) => {
     } finally {
       setLoader(false);
     }
+  };
+
+  const hyrButton = async () => {
+    if (phoneNumber.length < 14) {
+      setNumberChecker("Numri shume i shkurter");
+      return;
+    }
+
+    if (phoneNumber === defaultPhoneNumber) {
+      setNumberChecker("Shkruaj Numrin!");
+      return;
+    }
+
+    const netInfoState = await NetInfo.fetch();
+    if (!netInfoState.isConnected) {
+      setShowInternetPopup(true);
+      return;
+    }
+
+    setNumberChecker("");
+
+    setIsThisYourNumber(true);
   };
 
   return (
@@ -169,7 +186,7 @@ const LoginPage = ({ navigation }) => {
           <View>
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => setIsThisYourNumber(true)}
+              onPress={() => hyrButton()}
             >
               <Text style={styles.buttonText}>HYR</Text>
             </TouchableOpacity>
@@ -249,10 +266,14 @@ const LoginPage = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.vazhdoBtn}
                     onPress={() => {
-                      navigation.navigate("KodiVerifikimit", phoneNumber);
+                      handleLogin();
                     }}
                   >
-                    <Text style={styles.buttonText}>Vazhdo</Text>
+                    {loader ? (
+                      <ActivityIndicator></ActivityIndicator>
+                    ) : (
+                      <Text style={styles.buttonText}>Vazhdo</Text>
+                    )}
                   </TouchableOpacity>
                 </View>
               </View>

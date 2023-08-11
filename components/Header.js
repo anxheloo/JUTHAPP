@@ -1,12 +1,48 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Header = ({ userData }) => {
+const Header = ({ userData, navigation }) => {
   console.log(userData);
+
+  const userLogout = async () => {
+    const id = await AsyncStorage.getItem("id");
+    const userId = `user${JSON.parse(id)}`;
+
+    try {
+      await AsyncStorage.multiRemove([userId, "id"]);
+      navigation.replace("Login");
+    } catch (error) {
+      console.log("Error logging out the user: ", error);
+    }
+  };
+
+  const logout = () => {
+    Alert.alert("Logout", "Are you sure you want to logout", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel pressed"),
+      },
+      {
+        text: "Continue",
+        onPress: () => {
+          userLogout();
+        },
+      },
+      // { defaultIndex: 1 },
+    ]);
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -46,7 +82,7 @@ const Header = ({ userData }) => {
         </TouchableOpacity>
 
         <View style={styles.supportIcons}>
-          <TouchableOpacity onPress={() => console.log("Settings")}>
+          <TouchableOpacity onPress={() => logout()}>
             <Feather
               style={styles.supportImage}
               name="settings"

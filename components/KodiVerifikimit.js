@@ -27,10 +27,9 @@ const KodiVerifikimit = ({ navigation, route }) => {
   const [showInternetPopup, setShowInternetPopup] = useState(false);
   const [personalCode, setPersonalCode] = useState("");
   const [timer, setTimer] = useState(180);
-  const [isThisYourCode, setIsThisYourCode] = useState(false);
+  // const [isThisYourCode, setIsThisYourCode] = useState(false);
   const [loader, setLoader] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false); // New state to track timer expiration
-  const [verificationCode, setVerificationCode] = useState("");
 
   const { phoneNumber } = route.params;
 
@@ -47,18 +46,44 @@ const KodiVerifikimit = ({ navigation, route }) => {
   }, [timer]);
 
   const handleVerifyEmail = async () => {
+    console.log(
+      "THIS IS phoneNumber and personalCode, 1-handleVerifyEmail:",
+      phoneNumber,
+      personalCode
+    );
+    const formattedPhoneNumber = phoneNumber.replace(/\s/g, "");
+
     try {
       setLoader(true);
+      const endpoint = "http://192.168.1.236:3000/api/emailVerification";
+      const data = {
+        phonenumber: formattedPhoneNumber,
+        verificationCode: personalCode,
+      };
+      console.log("THIS IS data OBJECT: ", data);
       // Verify email with the provided verification code
-      const response = await axios.post(
-        "http://192.168.1.236:3000/api/emailVerification",
-        {
-          phonenumber: phoneNumber,
-          verificationCode: personalCode,
-        }
-      );
-      console.log(response.data);
+      const response = await axios.post(endpoint, data);
+      console.log("THIS IS response.data: ", response.data);
+
       if (response.data.message === "Email verification successful") {
+        await AsyncStorage.setItem(
+          `user${response.data.userData._id}`,
+          JSON.stringify(response.data.userData)
+        );
+
+        console.log("THIS IS response.data._id: ", response.data._id);
+        console.log(
+          "THIS IS response.data.userData._id: ",
+          response.data.userData._id
+        );
+        console.log("THIS IS response.data.userData: ", response.data.userData);
+
+        console.log("This is reponse.data again: ", response.data);
+
+        await AsyncStorage.setItem(
+          "id",
+          JSON.stringify(response.data.userData._id)
+        );
         navigation.navigate("Main");
       }
     } catch (error) {

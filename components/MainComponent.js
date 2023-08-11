@@ -90,7 +90,7 @@ const MainComponent = ({ navigation }) => {
         ]}
       >
         <StatusBar style="auto"></StatusBar>
-        <Header userData={userData} />
+        <Header userData={userData} navigation={navigation} />
         <ScrollView
           // onScroll={handleScroll}
           contentContainerStyle={styles.scrollContainer}
