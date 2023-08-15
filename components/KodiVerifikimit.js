@@ -5,21 +5,17 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
   Alert,
   ActivityIndicator,
-  Modal,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import NetInfo from "@react-native-community/netinfo";
 import InternetPopup from "./InternetPopup";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -27,11 +23,12 @@ const KodiVerifikimit = ({ navigation, route }) => {
   const [showInternetPopup, setShowInternetPopup] = useState(false);
   const [personalCode, setPersonalCode] = useState("");
   const [timer, setTimer] = useState(180);
-  // const [isThisYourCode, setIsThisYourCode] = useState(false);
   const [loader, setLoader] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false); // New state to track timer expiration
+  const [personalCodeChecker, setPersonalCodeChecker] = useState(false);
+  const vazhdoBtnRef = useRef();
 
-  const { phoneNumber } = route.params;
+  const { phoneNumber, handleLogin } = route.params;
 
   useEffect(() => {
     if (timer > 0) {
@@ -42,16 +39,30 @@ const KodiVerifikimit = ({ navigation, route }) => {
       return () => clearInterval(myTimer);
     } else {
       setTimerExpired(true);
+      // Use setNativeProps to change disabled attribute
+      // vazhdoBtnRef.current.setNativeProps({ disabled: true });
     }
   }, [timer]);
 
+  const handleReloadCode = async () => {
+    setPersonalCodeChecker(false);
+    setTimerExpired(false);
+    setTimer(180);
+    try {
+      // Call the handleLogin function passed from LoginPage
+      handleLogin();
+    } catch (error) {
+      console.error("Error calling handleLogin:", error);
+    }
+  };
+
   const handleVerifyEmail = async () => {
-    console.log(
-      "THIS IS phoneNumber and personalCode, 1-handleVerifyEmail:",
-      phoneNumber,
-      personalCode
-    );
     const formattedPhoneNumber = phoneNumber.replace(/\s/g, "");
+
+    if (personalCode.length < 6) {
+      setPersonalCodeChecker(true);
+      return;
+    }
 
     try {
       setLoader(true);
@@ -60,10 +71,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
         phonenumber: formattedPhoneNumber,
         verificationCode: personalCode,
       };
-      console.log("THIS IS data OBJECT: ", data);
-      // Verify email with the provided verification code
       const response = await axios.post(endpoint, data);
-      console.log("THIS IS response.data: ", response.data);
 
       if (response.data.message === "Email verification successful") {
         await AsyncStorage.setItem(
@@ -71,26 +79,25 @@ const KodiVerifikimit = ({ navigation, route }) => {
           JSON.stringify(response.data.userData)
         );
 
-        console.log("THIS IS response.data._id: ", response.data._id);
-        console.log(
-          "THIS IS response.data.userData._id: ",
-          response.data.userData._id
-        );
-        console.log("THIS IS response.data.userData: ", response.data.userData);
-
-        console.log("This is reponse.data again: ", response.data);
-
         await AsyncStorage.setItem(
           "id",
           JSON.stringify(response.data.userData._id)
         );
-        navigation.navigate("Main");
+
+        // Show success message popup
+        Alert.alert("Login Successfully!", "You have successfully logged in.", [
+          {
+            text: "Ok",
+            onPress: () => navigation.replace("Main"),
+          },
+        ]);
       }
     } catch (error) {
       console.error("Error verifying email:", error);
       Alert.alert("Error", "An error occurred. Please try again later.");
     } finally {
       setLoader(false);
+      setPersonalCode("");
     }
   };
 
@@ -122,7 +129,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
             <TouchableOpacity
               style={styles.headerTextLeft}
               onPress={() => {
-                navigation.goBack();
+                navigation.replace("Login");
               }}
             >
               <AntDesign name="left" size={24} color="white" />
@@ -162,14 +169,43 @@ const KodiVerifikimit = ({ navigation, route }) => {
                 maxLength={14}
               />
 
-              <View style={styles.timer}>
-                {timerExpired ? (
+              {timerExpired ? (
+                <TouchableOpacity
+                  style={styles.timer}
+                  onPress={handleReloadCode}
+                >
                   <Ionicons name="refresh-outline" size={24} color="black" />
-                ) : (
+                </TouchableOpacity>
+              ) : (
+                <View style={styles.timer}>
                   <Text style={styles.timerText}>{timer}</Text>
-                )}
-              </View>
+                </View>
+              )}
             </View>
+
+            {personalCodeChecker ? (
+              <View
+                style={{
+                  marginLeft: 12,
+                  backgroundColor: "white",
+                  width: windowWidth / 2,
+                  borderRadius: 10,
+                  marginTop: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    paddingHorizontal: 10,
+                    color: "red",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Kodi shume i shkurter!
+                </Text>
+              </View>
+            ) : (
+              <View></View>
+            )}
           </View>
 
           <View style={{ alignItems: "center" }}>
@@ -178,6 +214,8 @@ const KodiVerifikimit = ({ navigation, route }) => {
               onPress={() => {
                 handleVerifyEmail();
               }}
+              // ref={vazhdoBtnRef}
+              disabled={timerExpired}
             >
               {loader === false ? (
                 <Text style={styles.buttonText}>VAZHDO</Text>
@@ -287,8 +325,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
     height: 50,
-    // backgroundColor: "red",
-    // marginTop: 30,
   },
 
   headerTextLeft: {
@@ -303,12 +339,12 @@ const styles = StyleSheet.create({
     fontSize: 23,
   },
 
-  headerRight: {
-    width: "40%",
-    maxWidth: 170,
-    backgroundColor: "rgba(255,255,255,0.4)",
-    borderRadius: 10,
-  },
+  // headerRight: {
+  //   width: "40%",
+  //   maxWidth: 170,
+  //   backgroundColor: "rgba(255,255,255,0.4)",
+  //   borderRadius: 10,
+  // },
 
   headerRightTouchable: {
     width: "100%",

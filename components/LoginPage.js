@@ -31,6 +31,12 @@ const LoginPage = ({ navigation }) => {
   const [loader, setLoader] = useState(false);
   const [isThisYourNumber, setIsThisYourNumber] = useState(false);
 
+  // useEffect(() => {
+  //   setPhoneNumber(defaultPhoneNumber);
+  //   setNumberChecker("");
+  //   setIsThisYourNumber(false);
+  // }, []);
+
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");
   };
@@ -48,10 +54,16 @@ const LoginPage = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       // Call the login function with the user's phone number
-      await login(phoneNumber);
-      console.log("This is phoneNumber from handleLogin", phoneNumber);
-      // Navigate to the next page after successful login
-      navigation.navigate("KodiVerifikimit", { phoneNumber: phoneNumber });
+      const success = await login(phoneNumber);
+
+      if (success) {
+        console.log("This is phoneNumber from handleLogin", phoneNumber);
+        // Navigate to the next page after successful login
+        navigation.navigate("KodiVerifikimit", {
+          phoneNumber: phoneNumber,
+          handleLogin: handleLogin,
+        });
+      }
     } catch (error) {
       // Handle errors
       console.error("Login error:", error);
@@ -61,12 +73,6 @@ const LoginPage = ({ navigation }) => {
   const login = async (values) => {
     setLoader(true);
     const formattedPhoneNumber = values.replace(/\s/g, "");
-    console.log("THIS IS values: ", values);
-    console.log("THIS IS formattedPhoneNumber", formattedPhoneNumber);
-    console.log(
-      "THIS IS typeof formattedPhoneNumber",
-      typeof formattedPhoneNumber
-    );
 
     const netInfoState = await NetInfo.fetch();
     if (!netInfoState.isConnected) {
@@ -83,7 +89,8 @@ const LoginPage = ({ navigation }) => {
 
       if (response.status === 200) {
         setLoader(false);
-        console.log("THIS is response.data: ", response.data);
+        // console.log("THIS is response.data: ", response.data);
+        return true;
       } else {
         Alert.alert("Error Loggin in", "Please provide valid credentials", [
           {
@@ -96,6 +103,9 @@ const LoginPage = ({ navigation }) => {
           },
           // { defaultIndex: 1 },
         ]);
+        // setPhoneNumber("+355 6");
+        setIsThisYourNumber(false);
+        return false;
       }
     } catch (error) {
       console.log(error);
@@ -115,6 +125,9 @@ const LoginPage = ({ navigation }) => {
           // { defaultIndex: 1 },
         ]
       );
+      setPhoneNumber("+355 6");
+      setIsThisYourNumber(false);
+      return false;
     } finally {
       setLoader(false);
     }
@@ -371,6 +384,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#25a8dd", // Set your desired button background color
     paddingVertical: 10,
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 16,
     width: 110,
     // marginTop: windowHeight * 0.15,

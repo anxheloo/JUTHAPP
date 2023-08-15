@@ -15,6 +15,8 @@ import { StatusBar } from "expo-status-bar";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
+import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -136,6 +138,20 @@ const Registration = ({ navigation }) => {
       ]}
     >
       <StatusBar style="auto"></StatusBar>
+
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          style={styles.headerTextLeft}
+          onPress={() => {
+            // navigation.goBack();
+            navigation.replace("Login");
+          }}
+        >
+          <AntDesign name="left" size={24} color="white" />
+          <Text style={styles.gigamarketText}>Kthehu</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView>
         {/* <GigaMarketScreenHeader
           navigation={() => navigation.goBack()}
@@ -271,7 +287,7 @@ const Registration = ({ navigation }) => {
             {loader ? (
               <ActivityIndicator></ActivityIndicator>
             ) : (
-              <Text style={styles.btnText}>R E GJ I S T R O H U</Text>
+              <Text style={styles.btnText}>REGJISTROHU</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -329,6 +345,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: windowHeight * 0.05,
     width: windowWidth,
+    // backgroundColor: "red",
   },
 
   btn: {
@@ -341,8 +358,29 @@ const styles = StyleSheet.create({
 
   btnText: {
     color: "#FFF",
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: "bold",
+  },
+
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    width: "100%",
+    height: 50,
+    marginTop: 20,
+  },
+
+  headerTextLeft: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    padding: 5,
+  },
+
+  gigamarketText: {
+    color: "white",
+    fontSize: 23,
   },
 });
 
