@@ -10,6 +10,7 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -26,7 +27,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
   const [loader, setLoader] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false); // New state to track timer expiration
   const [personalCodeChecker, setPersonalCodeChecker] = useState(false);
-  const vazhdoBtnRef = useRef();
+  const kthehuBtn = useRef();
 
   const { phoneNumber, handleLogin } = route.params;
 
@@ -43,6 +44,21 @@ const KodiVerifikimit = ({ navigation, route }) => {
       // vazhdoBtnRef.current.setNativeProps({ disabled: true });
     }
   }, [timer]);
+
+  const handleBackButton = () => {
+    // if (kthehuBtn.current) {
+    //   navigation.replace("Login");
+    // }
+    return true; // Prevent default behavior
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
+    };
+  }, []);
 
   const handleReloadCode = async () => {
     setPersonalCodeChecker(false);
@@ -131,6 +147,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
               onPress={() => {
                 navigation.replace("Login");
               }}
+              ref={kthehuBtn}
             >
               <AntDesign name="left" size={24} color="white" />
               <Text style={styles.gigamarketText}>Kthehu</Text>

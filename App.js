@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginPage from "./components/LoginPage";
 import MainComponent from "./components/MainComponent";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GigaMarketScreen from "./components/GigaMarketScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";

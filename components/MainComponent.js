@@ -5,6 +5,7 @@ import {
   ScrollView,
   ActivityIndicator,
   RefreshControl,
+  BackHandler,
 } from "react-native";
 import Header from "./Header";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,6 +22,21 @@ const MainComponent = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [userLogin, setUserLogin] = useState(false);
   const [userData, setUserData] = useState(null);
+
+  const handleBackButton = () => {
+    // if (kthehuBtn.current) {
+    //   navigation.replace("Login");
+    // }
+    return true; // Prevent default behavior
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
+    };
+  }, []);
 
   useEffect(() => {
     checkExistingUser();

@@ -16,7 +16,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -39,8 +41,9 @@ const Registration = ({ navigation }) => {
   const [emailChecker, setEmailChecker] = useState(false);
   const [passwordChecker, setPasswordChecker] = useState(false);
   const [phoneNumberChecker, setPhoneNumberChecker] = useState(false);
-
   const [loader, setLoader] = useState(false);
+  const [secureText, setSecureText] = useState(true);
+  const insets = useSafeAreaInsets();
 
   const registerUser = async () => {
     if (firstName.length === 0) {
@@ -89,7 +92,17 @@ const Registration = ({ navigation }) => {
         setPhoneNumberChecker(false);
         setPasswordChecker(false);
         console.log(response.data);
-        navigation.navigate("Login");
+        // Show success message popup
+        Alert.alert(
+          "Register Successfully!",
+          "You have successfully registered the user.",
+          [
+            {
+              text: "Ok",
+              onPress: () => navigation.replace("Login"),
+            },
+          ]
+        );
       } else {
         Alert.alert("Error Registering", "Please try again!", [
           {
@@ -123,7 +136,7 @@ const Registration = ({ navigation }) => {
 
   return (
     <LinearGradient
-      style={styles.container}
+      style={(styles.container, { paddingTop: insets.top })}
       colors={[
         "#55e1ce",
         "#00cfe0",
@@ -238,6 +251,7 @@ const Registration = ({ navigation }) => {
               )}
             >
               <TextInput
+                secureTextEntry={secureText}
                 style={styles.input}
                 placeholder="Enter your password"
                 onFocus={() => {
@@ -248,6 +262,17 @@ const Registration = ({ navigation }) => {
                 value={password}
                 onChangeText={(text) => setPassword(text)}
               ></TextInput>
+
+              <TouchableOpacity
+                onPress={() => {
+                  setSecureText(!secureText);
+                }}
+              >
+                <MaterialCommunityIcons
+                  name={secureText ? "eye-off-outline" : "eye-outline"}
+                  size={18}
+                ></MaterialCommunityIcons>
+              </TouchableOpacity>
             </View>
             {passwordChecker && (
               <Text>Passwordi duhet te kete me shume se 6 karaktere</Text>
@@ -323,7 +348,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 12,
     paddingHorizontal: 15,
-    // alignItems: "center",
+    flexDirection: "row",
+    alignItems: "center",
   }),
 
   label: {
@@ -368,7 +394,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
     height: 50,
-    marginTop: 20,
+    // marginTop: 20,
   },
 
   headerTextLeft: {
