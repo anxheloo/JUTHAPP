@@ -21,6 +21,7 @@ import InternetPopup from "./InternetPopup";
 // import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/native";
 
 const LoginPage = ({ navigation }) => {
   const inputRef = useRef(null);
@@ -36,6 +37,28 @@ const LoginPage = ({ navigation }) => {
   //   setNumberChecker("");
   //   setIsThisYourNumber(false);
   // }, []);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        if (token) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: "Main" }], // Make sure "Main" matches your MainComponent screen name
+            })
+          );
+        } else {
+          //token not found, show the login screen
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");
@@ -59,6 +82,7 @@ const LoginPage = ({ navigation }) => {
       if (success) {
         console.log("This is phoneNumber from handleLogin", phoneNumber);
         // Navigate to the next page after successful login
+        // setIsThisYourNumber(false);
         navigation.navigate("KodiVerifikimit", {
           phoneNumber: phoneNumber,
           handleLogin: handleLogin,
@@ -103,8 +127,6 @@ const LoginPage = ({ navigation }) => {
           },
           // { defaultIndex: 1 },
         ]);
-        // setPhoneNumber("+355 6");
-        setIsThisYourNumber(false);
         return false;
       }
     } catch (error) {
@@ -129,6 +151,7 @@ const LoginPage = ({ navigation }) => {
       setIsThisYourNumber(false);
       return false;
     } finally {
+      setIsThisYourNumber(false);
       setLoader(false);
     }
   };
@@ -218,81 +241,79 @@ const LoginPage = ({ navigation }) => {
         {/* Show the InternetPopup when showInternetPopup is true */}
         {showInternetPopup && <InternetPopup />}
 
-        {isThisYourNumber && (
-          <Modal
-            visible={isThisYourNumber}
-            transparent
-            animationType="fade"
-            // style={{ height: 300, width: "80%" }}
-          >
-            <View style={styles.centeredContainer}>
-              <View style={styles.popUpContainer}>
+        <Modal
+          visible={isThisYourNumber}
+          transparent
+          animationType="fade"
+          // style={{ height: 300, width: "80%" }}
+        >
+          <View style={styles.centeredContainer}>
+            <View style={styles.popUpContainer}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 24,
+                  marginTop: 30,
+                  paddingHorizontal: 20,
+                  textAlign: "center",
+                  color: "gray",
+                }}
+              >
+                A eshte ky numri yt i telefonit?
+              </Text>
+
+              <Text
+                style={{ fontSize: 25, color: "blue", textAlign: "center" }}
+              >
+                {phoneNumber}
+              </Text>
+
+              <View style={{ paddingHorizontal: 20 }}>
                 <Text
                   style={{
-                    fontWeight: "bold",
-                    fontSize: 24,
-                    marginTop: 30,
-                    paddingHorizontal: 20,
+                    fontSize: 18,
+                    fontWeight: "regular",
                     textAlign: "center",
-                    color: "gray",
+                  }}
+                  numberOfLines={3}
+                >
+                  Duke shtypur vazhdo ti pranon te marresh nje SMS me kodin e
+                  verifikimit
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  width: "100%",
+                }}
+              >
+                <TouchableOpacity
+                  style={styles.anulloBtn}
+                  onPress={() => {
+                    setIsThisYourNumber(false);
                   }}
                 >
-                  A eshte ky numri yt i telefonit?
-                </Text>
+                  <Text style={styles.buttonText}>Anullo</Text>
+                </TouchableOpacity>
 
-                <Text
-                  style={{ fontSize: 25, color: "blue", textAlign: "center" }}
-                >
-                  {phoneNumber}
-                </Text>
-
-                <View style={{ paddingHorizontal: 20 }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "regular",
-                      textAlign: "center",
-                    }}
-                    numberOfLines={3}
-                  >
-                    Duke shtypur vazhdo ti pranon te marresh nje SMS me kodin e
-                    verifikimit
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    width: "100%",
+                <TouchableOpacity
+                  style={styles.vazhdoBtn}
+                  onPress={() => {
+                    handleLogin();
                   }}
                 >
-                  <TouchableOpacity
-                    style={styles.anulloBtn}
-                    onPress={() => {
-                      setIsThisYourNumber(false);
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Anullo</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.vazhdoBtn}
-                    onPress={() => {
-                      handleLogin();
-                    }}
-                  >
-                    {loader ? (
-                      <ActivityIndicator></ActivityIndicator>
-                    ) : (
-                      <Text style={styles.buttonText}>Vazhdo</Text>
-                    )}
-                  </TouchableOpacity>
-                </View>
+                  {loader ? (
+                    <ActivityIndicator></ActivityIndicator>
+                  ) : (
+                    <Text style={styles.buttonText}>Vazhdo</Text>
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
-          </Modal>
-        )}
+          </View>
+        </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
   );

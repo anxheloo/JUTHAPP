@@ -137,6 +137,7 @@ const Registration = ({ navigation }) => {
   return (
     <LinearGradient
       style={(styles.container, { paddingTop: insets.top })}
+      // style={styles.container}
       colors={[
         "#55e1ce",
         "#00cfe0",
@@ -165,7 +166,7 @@ const Registration = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView>
+      <ScrollView style={{ marginBottom: 50 }}>
         {/* <GigaMarketScreenHeader
           navigation={() => navigation.goBack()}
         ></GigaMarketScreenHeader> */}
@@ -395,6 +396,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     // marginTop: 20,
+    // backgroundColor: "red",
   },
 
   headerTextLeft: {

@@ -19,9 +19,11 @@ const Header = ({ userData, navigation }) => {
   const userLogout = async () => {
     const id = await AsyncStorage.getItem("id");
     const userId = `user${JSON.parse(id)}`;
+    const userToken = await AsyncStorage.getItem("token");
 
     try {
       await AsyncStorage.multiRemove([userId, "id"]);
+      await AsyncStorage.removeItem("token");
       navigation.replace("Login");
     } catch (error) {
       console.log("Error logging out the user: ", error);

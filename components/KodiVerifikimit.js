@@ -19,6 +19,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import SafeAreaView from "react-native-safe-area-view";
+import { CommonActions } from "@react-navigation/native";
 
 const KodiVerifikimit = ({ navigation, route }) => {
   const [showInternetPopup, setShowInternetPopup] = useState(false);
@@ -27,7 +30,8 @@ const KodiVerifikimit = ({ navigation, route }) => {
   const [loader, setLoader] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false); // New state to track timer expiration
   const [personalCodeChecker, setPersonalCodeChecker] = useState(false);
-  const kthehuBtn = useRef();
+
+  const insets = useSafeAreaInsets();
 
   const { phoneNumber, handleLogin } = route.params;
 
@@ -45,20 +49,20 @@ const KodiVerifikimit = ({ navigation, route }) => {
     }
   }, [timer]);
 
-  const handleBackButton = () => {
-    // if (kthehuBtn.current) {
-    //   navigation.replace("Login");
-    // }
-    return true; // Prevent default behavior
-  };
+  // const handleBackButton = () => {
+  //   // if (kthehuBtn.current) {
+  //   //   navigation.replace("Login");
+  //   // }
+  //   return true; // Prevent default behavior
+  // };
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress", handleBackButton);
 
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
-    };
-  }, []);
+  //   return () => {
+  //     BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
+  //   };
+  // }, []);
 
   const handleReloadCode = async () => {
     setPersonalCodeChecker(false);
@@ -100,13 +104,30 @@ const KodiVerifikimit = ({ navigation, route }) => {
           JSON.stringify(response.data.userData._id)
         );
 
+        await AsyncStorage.setItem(
+          "token",
+          JSON.stringify(response.data.token)
+        );
+
+        console.log("THIS IS TOKEN:,", response.data.token);
+
+        // navigation.replace("Main");
+
+        //This is the 1-Way to use to clear the navigation state so when i hit back in HomePage, it would not send me to LoginPage
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Main" }], // Make sure "Main" matches your MainComponent screen name
+          })
+        );
+
         // Show success message popup
-        Alert.alert("Login Successfully!", "You have successfully logged in.", [
-          {
-            text: "Ok",
-            onPress: () => navigation.replace("Main"),
-          },
-        ]);
+        // Alert.alert("Login Successfully!", "You have successfully logged in.", [
+        //   {
+        //     text: "Ok",
+        //     onPress: () => navigation.replace("Main"),
+        //   },
+        // ]);
       }
     } catch (error) {
       console.error("Error verifying email:", error);
@@ -139,20 +160,18 @@ const KodiVerifikimit = ({ navigation, route }) => {
         ]}
       >
         <StatusBar style="auto"></StatusBar>
+        {/* <View style={[{ flex: 1 }, { paddingTop: insets.top }]}> */}
 
-        <View>
-          <View style={styles.headerContainer}>
-            <TouchableOpacity
-              style={styles.headerTextLeft}
-              onPress={() => {
-                navigation.replace("Login");
-              }}
-              ref={kthehuBtn}
-            >
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.gigamarketText}>Kthehu</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            style={styles.headerTextLeft}
+            onPress={() => {
+              navigation.replace("Login");
+            }}
+          >
+            <AntDesign name="left" size={24} color="white" />
+            <Text style={styles.gigamarketText}>Kthehu</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.logoContainer}>
@@ -257,8 +276,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    // alignItems: "center",
     padding: 10,
+    // backgroundColor: "white",
   },
   logoContainer: {
     alignItems: "center",
@@ -336,12 +355,15 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
+    // position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 10,
     width: "100%",
     height: 50,
+    // top: 45,
+    // backgroundColor: "red",
   },
 
   headerTextLeft: {

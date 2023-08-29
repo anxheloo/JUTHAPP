@@ -1,5 +1,12 @@
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
+import React, { useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Image,
+  BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 

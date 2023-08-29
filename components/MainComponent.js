@@ -16,27 +16,48 @@ import Footer from "./Footer";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  NavigationContainer,
+  useNavigation,
+  useNavigationContainerRef,
+  StackActions,
+  useIsFocused,
+  CommonActions,
+} from "@react-navigation/native";
 
-const MainComponent = ({ navigation }) => {
+const MainComponent = () => {
+  // {navigation;}
+
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
   const [userLogin, setUserLogin] = useState(false);
   const [userData, setUserData] = useState(null);
 
+  //This is the 2-Way to use to prevent going back in LoginPage when im currently in HomePage. Go to KodiVerifikimit for WAY-1
+  /*
   const handleBackButton = () => {
-    // if (kthehuBtn.current) {
-    //   navigation.replace("Login");
-    // }
-    return true; // Prevent default behavior
-  };
+    if (isFocused) {
+      // Handle the back button press here for MainComponent
+      // You can either do nothing or show a message to the user
+      return true; // Prevent the default behavior
+    }
 
+    // Allow the default behavior on other screens
+    return false;
+  };
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
 
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
     };
-  }, []);
+  }, [isFocused]);
+
+
+  */
 
   useEffect(() => {
     checkExistingUser();
@@ -53,6 +74,8 @@ const MainComponent = ({ navigation }) => {
         const parsedData = JSON.parse(currentUser);
         setUserData(parsedData);
         setUserLogin(true);
+
+        console.log("THIS ARE USERDATA :", parsedData);
       }
     } catch (error) {
       console.log("Error retrieving the data: ", error);
