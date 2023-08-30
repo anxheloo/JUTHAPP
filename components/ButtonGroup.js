@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "85%",
     width: "30%",
-    // backgroundColor: "red",
   },
 
   middleBorders: {
@@ -85,7 +84,6 @@ const styles = StyleSheet.create({
     borderRightColor: "rgba(255,255,255,0.5)",
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.5)",
-    // paddingHorizontal: "6%",
     width: "40%",
     height: "85%",
     alignItems: "center",

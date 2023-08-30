@@ -3,9 +3,8 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  ActivityIndicator,
   RefreshControl,
-  BackHandler,
+  Alert,
 } from "react-native";
 import Header from "./Header";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,14 +15,9 @@ import Footer from "./Footer";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  NavigationContainer,
-  useNavigation,
-  useNavigationContainerRef,
-  StackActions,
-  useIsFocused,
-  CommonActions,
-} from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import jwt_decode from "jwt-decode";
+import { tokenAlert } from "./tokenAlert";
 
 const MainComponent = () => {
   // {navigation;}
@@ -35,6 +29,58 @@ const MainComponent = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [userLogin, setUserLogin] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [alertShown, setAlertShown] = useState(false);
+
+  // tokenAlert(navigation);
+
+  const checkTokenExpiration = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+
+      if (token) {
+        const { exp } = jwt_decode(token);
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+
+        if (exp <= currentTimestamp && !alertShown) {
+          // Token has expired, show an alert
+          Alert.alert(
+            "Token has expired",
+            "Log in again!",
+            [
+              {
+                text: "Log in again",
+                onPress: async () => {
+                  setAlertShown(false);
+                  const id = await AsyncStorage.getItem("id");
+                  const userId = `user${JSON.parse(id)}`;
+                  await AsyncStorage.multiRemove([userId, "id", "token"]);
+                  navigation.replace("Login");
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+
+          setAlertShown(true);
+        }
+      }
+    } catch (error) {
+      console.log("Error checking token expiration:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Check token expiration every 10 seconds (adjust this interval as needed)
+    const tokenCheckInterval = setInterval(checkTokenExpiration, 10000);
+
+    // Initial check when the component mounts
+    checkTokenExpiration();
+
+    // Cleanup interval on unmount
+    return () => {
+      clearInterval(tokenCheckInterval);
+    };
+  }, []);
 
   //This is the 2-Way to use to prevent going back in LoginPage when im currently in HomePage. Go to KodiVerifikimit for WAY-1
   /*
@@ -66,6 +112,27 @@ const MainComponent = () => {
   const checkExistingUser = async () => {
     const id = await AsyncStorage.getItem("id");
     const userId = `user${JSON.parse(id)}`;
+    const token = await AsyncStorage.getItem("token");
+
+    // if(token){
+
+    //        const { exp } = jwt_decode(token);
+
+    //       // Get the current timestamp (in seconds)
+    //       const currentTimestamp = Math.floor(Date.now() / 1000);
+
+    //       console.log("THIS IS EXP:", exp);
+    //       console.log("THIS IS currentTimestamp:", currentTimestamp);
+
+    //       if (exp > currentTimestamp) {
+    //         // Token is not expired, navigate to the home page
+    //         navigation.dispatch(
+    //           CommonActions.reset({
+    //             index: 0,
+    //             routes: [{ name: "Main" }], // Redirect to the home page
+    //           })
+    //         );
+    // }
 
     try {
       const currentUser = await AsyncStorage.getItem(userId);
@@ -75,6 +142,7 @@ const MainComponent = () => {
         setUserData(parsedData);
         setUserLogin(true);
 
+        return currentUser;
         console.log("THIS ARE USERDATA :", parsedData);
       }
     } catch (error) {
@@ -82,33 +150,22 @@ const MainComponent = () => {
     }
   };
 
-  // const handleScroll = (event) => {
-  //   const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-
-  //   const isCloseToBottom =
-  //     layoutMeasurement.height + contentOffset.y >= contentSize.height - 50;
-
-  //   if (isCloseToBottom && !refreshing) {
-  //     // Perform the refresh action
-  //     setRefreshing(true);
-  //     // Call the function to refresh or load more data
-  //     // You can update your data here or make an API request to fetch more data
-  //     // After updating the data, setRefreshing(false) to stop the refresh indicator
-  //     setTimeout(() => {
-  //       setRefreshing(false);
-  //     }, 1500);
-  //   }
-  // };
-
   const onRefresh = () => {
     // Perform the refresh action here
     setRefreshing(true);
     // Call the function to refresh or load more data
     // You can update your data here or make an API request to fetch more data
     // After updating the data, setRefreshing(false) to stop the refresh indicator
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   setRefreshing(false);
+    // }, 1500);
+
+    const currentUser = checkExistingUser();
+    if (currentUser !== null) {
+      const parsedData = JSON.parse(currentUser);
+      setUserData(parsedData);
       setRefreshing(false);
-    }, 1500);
+    }
   };
 
   return (

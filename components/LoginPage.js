@@ -17,11 +17,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import NetInfo from "@react-native-community/netinfo";
 import InternetPopup from "./InternetPopup";
-// import { MaterialIcons } from "@expo/vector-icons";
-// import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
+import jwt_decode from "jwt-decode";
+// import jwt from "jsonwebtoken";
 
 const LoginPage = ({ navigation }) => {
   const inputRef = useRef(null);
@@ -42,13 +42,47 @@ const LoginPage = ({ navigation }) => {
     const checkLoginStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
+        const secret = await AsyncStorage.getItem("secret");
+
         if (token) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: "Main" }], // Make sure "Main" matches your MainComponent screen name
-            })
-          );
+          // Decode the token to get the expiration timestamp (in seconds)
+          const { exp } = jwt_decode(token);
+
+          // Get the current timestamp (in seconds)
+          const currentTimestamp = Math.floor(Date.now() / 1000);
+
+          console.log("THIS IS EXP:", exp);
+          console.log("THIS IS currentTimestamp:", currentTimestamp);
+
+          if (exp > currentTimestamp) {
+            // Token is not expired, navigate to the home page
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Main" }], // Redirect to the home page
+              })
+            );
+          } else {
+            // Token is expired, take appropriate actions
+            console.log("Token has expired");
+
+            // Remove the expired token
+            await AsyncStorage.removeItem("token");
+
+            // Optionally, you can also remove other user data
+            const id = await AsyncStorage.getItem("id");
+            const userId = `user${JSON.parse(id)}`;
+            await AsyncStorage.multiRemove([userId, "id"]);
+
+            // Navigate to the login page
+            // navigation.replace("Login");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Login" }], // Redirect to the "Login" page
+              })
+            );
+          }
         } else {
           //token not found, show the login screen
         }
@@ -59,6 +93,58 @@ const LoginPage = ({ navigation }) => {
 
     checkLoginStatus();
   }, []);
+
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("token");
+  //       const secret = await AsyncStorage.getItem("secret");
+
+  //       if (token) {
+  //         jwt.verify(token, secret, async (err, decoded) => {
+  //           if (err) {
+  //             console.log("Error Verifying token: ", err);
+
+  //             // Token is expired, take appropriate actions
+  //             console.log("Token has expired");
+
+  //             // Remove the expired token
+  //             await AsyncStorage.multiRemove(["token", "secret"]);
+
+  //             // Optionally, you can also remove other user data
+  //             const id = await AsyncStorage.getItem("id");
+  //             const userId = `user${JSON.parse(id)}`;
+  //             await AsyncStorage.multiRemove([userId, "id"]);
+
+  //             navigation.dispatch(
+  //               CommonActions.reset({
+  //                 index: 0,
+  //                 routes: [{ name: "Login" }], // Redirect to the "Login" page
+  //               })
+  //             );
+  //           } else {
+  //             // Token is valid, you can access decoded data here
+  //             console.log("Decoded JWT Data:", decoded);
+  //             console.log("Expiration JWT :", decoded.exp);
+
+  //             navigation.dispatch(
+  //               CommonActions.reset({
+  //                 index: 0,
+  //                 routes: [{ name: "Main" }], // Redirect to the home page
+  //               })
+  //             );
+  //           }
+  //         });
+  //       } else {
+  //         //token not found, show the login screen
+  //       }
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   };
+
+  //   checkLoginStatus();
+  // }, []);
 
   const onClickMyButton = () => {
     setPhoneNumber("+355 6");

@@ -1,13 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-  BackHandler,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 const Footer = ({ navigation }) => {

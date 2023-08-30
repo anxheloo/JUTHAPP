@@ -14,7 +14,6 @@ const GigamarketItemContainer = (props) => {
   console.log(width, height);
 
   const handelClick = () => {
-    // props.onPress, props.navigation.navigate("ItemScreen");
     props.onPress();
   };
 
@@ -101,7 +100,6 @@ const GigamarketItemContainer = (props) => {
               justifyContent: "space-between",
               alignItems: "center",
               padding: 6,
-              // backgroundColor: "blue",
             }}
           >
             <Image
@@ -118,7 +116,6 @@ const GigamarketItemContainer = (props) => {
                 color: "black",
                 fontWeight: "bold",
                 alignSelf: "center",
-                // backgroundColor: "red",
               }}
             >
               {props.data.offerDayValidity}

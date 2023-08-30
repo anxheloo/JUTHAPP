@@ -10,7 +10,6 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Header = ({ userData, navigation }) => {
@@ -19,10 +18,10 @@ const Header = ({ userData, navigation }) => {
   const userLogout = async () => {
     const id = await AsyncStorage.getItem("id");
     const userId = `user${JSON.parse(id)}`;
-    const userToken = await AsyncStorage.getItem("token");
 
     try {
       await AsyncStorage.multiRemove([userId, "id"]);
+      // await AsyncStorage.multiRemove(["token", "secret"]);
       await AsyncStorage.removeItem("token");
       navigation.replace("Login");
     } catch (error) {

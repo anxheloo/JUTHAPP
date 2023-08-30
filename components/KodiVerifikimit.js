@@ -10,7 +10,6 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
-  BackHandler,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -20,8 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SafeAreaView from "react-native-safe-area-view";
 import { CommonActions } from "@react-navigation/native";
+import jwt_decode from "jwt-decode";
 
 const KodiVerifikimit = ({ navigation, route }) => {
   const [showInternetPopup, setShowInternetPopup] = useState(false);
@@ -109,11 +108,30 @@ const KodiVerifikimit = ({ navigation, route }) => {
           JSON.stringify(response.data.token)
         );
 
-        console.log("THIS IS TOKEN:,", response.data.token);
+        // await AsyncStorage.setItem(
+        //   "secret",
+        //   JSON.stringify(response.data.secret)
+        // );
 
-        // navigation.replace("Main");
+        // const unixTimestamp = jwt_decode(response.data.token).exp;
+        // Create a new Date object by multiplying the Unix timestamp by 1000
+        // to convert it from seconds to milliseconds
+        // const expirationDate = new Date(unixTimestamp * 1000);
+        // // Now, you can format the date in a human-readable format
+        // const formattedDate = expirationDate.toLocaleString();
+
+        // console.log("Human-Readable Expiration Date:", formattedDate);
+        // console.log("THis is date.now: ", Date.now() / 1000);
+
+        // console.log("TRUE OR FALSE: ", formattedDate < Date.now() / 1000);
+
+        // console.log("Human-Readable Expiration Date:", unixTimestamp);
+        // console.log("THis is date.now: ", Date.now() / 1000);
+
+        // console.log("TRUE OR FALSE: ", unixTimestamp < Date.now() / 1000);
 
         //This is the 1-Way to use to clear the navigation state so when i hit back in HomePage, it would not send me to LoginPage
+
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

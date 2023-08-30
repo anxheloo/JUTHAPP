@@ -13,9 +13,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
-import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -137,7 +134,6 @@ const Registration = ({ navigation }) => {
   return (
     <LinearGradient
       style={(styles.container, { paddingTop: insets.top })}
-      // style={styles.container}
       colors={[
         "#55e1ce",
         "#00cfe0",
@@ -157,7 +153,6 @@ const Registration = ({ navigation }) => {
         <TouchableOpacity
           style={styles.headerTextLeft}
           onPress={() => {
-            // navigation.goBack();
             navigation.replace("Login");
           }}
         >
@@ -167,9 +162,6 @@ const Registration = ({ navigation }) => {
       </View>
 
       <ScrollView style={{ marginBottom: 50 }}>
-        {/* <GigaMarketScreenHeader
-          navigation={() => navigation.goBack()}
-        ></GigaMarketScreenHeader> */}
         <View style={styles.logoContainer}>
           <Image
             style={styles.image}
@@ -372,7 +364,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: windowHeight * 0.05,
     width: windowWidth,
-    // backgroundColor: "red",
   },
 
   btn: {
@@ -395,8 +386,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
     height: 50,
-    // marginTop: 20,
-    // backgroundColor: "red",
   },
 
   headerTextLeft: {
