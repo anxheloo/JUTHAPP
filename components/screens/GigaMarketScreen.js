@@ -11,19 +11,19 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign } from "@expo/vector-icons";
-import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
+import GigaMarketScreenHeader from "../GigaMarketScreenHeader";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
-import SliderComponent from "./SliderComponent";
+import SliderComponent from "../SliderComponent";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import GigamarketItemContainer from "./GigaMarketItemComponent";
-import TokenPopUp from "./TokenPopUp";
+import GigamarketItemContainer from "../GigaMarketItemComponent";
+import TokenPopUp from "../TokenPopUp";
 
 const productData = [
   {
     id: 0,
-    image: require("../assets/images/unnamed.png"),
+    image: require("../../assets/images/unnamed.png"),
     mb: "200MB",
     description:
       "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
@@ -34,7 +34,7 @@ const productData = [
 
   {
     id: 1,
-    image: require("../assets/images/unnamed.png"),
+    image: require("../../assets/images/unnamed.png"),
     mb: "100MB",
     description:
       "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
@@ -45,7 +45,7 @@ const productData = [
 
   {
     id: 2,
-    image: require("../assets/images/unnamed.png"),
+    image: require("../../assets/images/unnamed.png"),
     mb: "1GB",
     description:
       "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
@@ -55,7 +55,7 @@ const productData = [
   },
   {
     id: 3,
-    image: require("../assets/images/unnamed.png"),
+    image: require("../../assets/images/unnamed.png"),
     mb: "400MB",
     description:
       "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",
@@ -65,7 +65,7 @@ const productData = [
   },
   {
     id: 4,
-    image: require("../assets/images/unnamed.png"),
+    image: require("../../assets/images/unnamed.png"),
     mb: "1GB",
     description:
       "Interneti i ketij produkti eshte i vlefshem per 24 ore ne shpejtesite 3G/4G",

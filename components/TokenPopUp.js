@@ -68,7 +68,7 @@ const TokenPopUp = () => {
       };
 
       //   // Check token expiration every 10 seconds (adjust this interval as needed)
-      const tokenCheckInterval = setInterval(checkTokenExpiration, 10000);
+      const tokenCheckInterval = setInterval(checkTokenExpiration, 60000);
 
       // Initial check when the component mounts
       checkTokenExpiration();

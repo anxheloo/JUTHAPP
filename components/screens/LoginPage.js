@@ -12,11 +12,13 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import NetInfo from "@react-native-community/netinfo";
-import InternetPopup from "./InternetPopup";
+import InternetPopup from "../InternetPopup";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
@@ -265,143 +267,148 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <LinearGradient
-        style={styles.container}
-        colors={[
-          "#55e1ce",
-          "#00cfe0",
-          "#00bbf2",
-          "#00a2fc",
-          "#0083f4",
-          "#4775ee",
-          "#6964e5",
-          "#8451d7",
-          "#9952db",
-          "#d555e1",
-        ]}
-      >
-        <StatusBar style="auto"></StatusBar>
-
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.image}
-            source={require("../assets/images/unnamed.png")}
-          ></Image>
-        </View>
-        <View style={styles.formContainer}>
-          <View>
-            <Text style={styles.text}>Vendos numrin e telefonit</Text>
-            <TextInput
-              ref={inputRef}
-              style={styles.input}
-              keyboardType="phone-pad"
-              value={phoneNumber}
-              onChangeText={handlePhoneNumberChange}
-              onPressIn={onClickMyButton}
-              maxLength={14}
-            />
-          </View>
-
-          <Text>{numberChecker}</Text>
-
-          <View>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => hyrButton()}
-            >
-              <Text style={styles.buttonText}>HYR</Text>
-            </TouchableOpacity>
-
-            <Text
-              style={{ color: "white", textAlign: "center", padding: 10 }}
-              onPress={() => {
-                navigation.navigate("Registration");
-              }}
-            >
-              Regjistrohu
-            </Text>
-          </View>
-        </View>
-
-        {/* Show the InternetPopup when showInternetPopup is true */}
-        {showInternetPopup && <InternetPopup />}
-
-        <Modal
-          visible={isThisYourNumber}
-          transparent
-          animationType="fade"
-          // style={{ height: 300, width: "80%" }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
+        <LinearGradient
+          style={styles.container}
+          colors={[
+            "#55e1ce",
+            "#00cfe0",
+            "#00bbf2",
+            "#00a2fc",
+            "#0083f4",
+            "#4775ee",
+            "#6964e5",
+            "#8451d7",
+            "#9952db",
+            "#d555e1",
+          ]}
         >
-          <View style={styles.centeredContainer}>
-            <View style={styles.popUpContainer}>
+          <StatusBar style="auto"></StatusBar>
+
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/images/unnamed.png")}
+            ></Image>
+          </View>
+          <View style={styles.formContainer}>
+            <View>
+              <Text style={styles.text}>Vendos numrin e telefonit</Text>
+              <TextInput
+                ref={inputRef}
+                style={styles.input}
+                keyboardType="phone-pad"
+                value={phoneNumber}
+                onChangeText={handlePhoneNumberChange}
+                onPressIn={onClickMyButton}
+                maxLength={14}
+              />
+            </View>
+
+            <Text>{numberChecker}</Text>
+
+            <View>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => hyrButton()}
+              >
+                <Text style={styles.buttonText}>HYR</Text>
+              </TouchableOpacity>
+
               <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 24,
-                  marginTop: 30,
-                  paddingHorizontal: 20,
-                  textAlign: "center",
-                  color: "gray",
+                style={{ color: "white", textAlign: "center", padding: 10 }}
+                onPress={() => {
+                  navigation.navigate("Registration");
                 }}
               >
-                A eshte ky numri yt i telefonit?
+                Regjistrohu
               </Text>
-
-              <Text
-                style={{ fontSize: 25, color: "blue", textAlign: "center" }}
-              >
-                {phoneNumber}
-              </Text>
-
-              <View style={{ paddingHorizontal: 20 }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "regular",
-                    textAlign: "center",
-                  }}
-                  numberOfLines={3}
-                >
-                  Duke shtypur vazhdo ti pranon te marresh nje SMS me kodin e
-                  verifikimit
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  width: "100%",
-                }}
-              >
-                <TouchableOpacity
-                  style={styles.anulloBtn}
-                  onPress={() => {
-                    setIsThisYourNumber(false);
-                  }}
-                >
-                  <Text style={styles.buttonText}>Anullo</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.vazhdoBtn}
-                  onPress={() => {
-                    handleLogin();
-                  }}
-                >
-                  {loader ? (
-                    <ActivityIndicator></ActivityIndicator>
-                  ) : (
-                    <Text style={styles.buttonText}>Vazhdo</Text>
-                  )}
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
-        </Modal>
-      </LinearGradient>
-    </TouchableWithoutFeedback>
+
+          {/* Show the InternetPopup when showInternetPopup is true */}
+          {showInternetPopup && <InternetPopup />}
+
+          <Modal
+            visible={isThisYourNumber}
+            transparent
+            animationType="fade"
+            // style={{ height: 300, width: "80%" }}
+          >
+            <View style={styles.centeredContainer}>
+              <View style={styles.popUpContainer}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 24,
+                    marginTop: 30,
+                    paddingHorizontal: 20,
+                    textAlign: "center",
+                    color: "gray",
+                  }}
+                >
+                  A eshte ky numri yt i telefonit?
+                </Text>
+
+                <Text
+                  style={{ fontSize: 25, color: "blue", textAlign: "center" }}
+                >
+                  {phoneNumber}
+                </Text>
+
+                <View style={{ paddingHorizontal: 20 }}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "regular",
+                      textAlign: "center",
+                    }}
+                    numberOfLines={3}
+                  >
+                    Duke shtypur vazhdo ti pranon te marresh nje SMS me kodin e
+                    verifikimit
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    width: "100%",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.anulloBtn}
+                    onPress={() => {
+                      setIsThisYourNumber(false);
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Anullo</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.vazhdoBtn}
+                    onPress={() => {
+                      handleLogin();
+                    }}
+                  >
+                    {loader ? (
+                      <ActivityIndicator></ActivityIndicator>
+                    ) : (
+                      <Text style={styles.buttonText}>Vazhdo</Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </LinearGradient>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

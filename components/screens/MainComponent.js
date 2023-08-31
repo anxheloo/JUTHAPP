@@ -6,19 +6,19 @@ import {
   RefreshControl,
   Alert,
 } from "react-native";
-import Header from "./Header";
+import Header from "../Header";
 import { LinearGradient } from "expo-linear-gradient";
-import Story from "./Story";
-import ButtonGroup from "./ButtonGroup";
-import TabViewExample from "./TabViewExample";
-import Footer from "./Footer";
+import Story from "../Story";
+import ButtonGroup from "../ButtonGroup";
+import TabViewExample from "../TabViewExample";
+import Footer from "../Footer";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import jwt_decode from "jwt-decode";
-import { tokenAlert } from "./tokenAlert";
-import TokenPopUp from "./TokenPopUp";
+import { tokenAlert } from "../tokenAlert";
+import TokenPopUp from "../TokenPopUp";
 
 const MainComponent = () => {
   // {navigation;}

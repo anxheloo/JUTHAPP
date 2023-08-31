@@ -1,14 +1,14 @@
 import React from "react";
-import LoginPage from "./components/LoginPage";
-import MainComponent from "./components/MainComponent";
+import LoginPage from "./components/screens/LoginPage";
+import MainComponent from "./components/screens/MainComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import GigaMarketScreen from "./components/GigaMarketScreen";
+import GigaMarketScreen from "./components/screens/GigaMarketScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import ItemScreen from "./components/ItemScreen";
+import ItemScreen from "./components/screens/ItemScreen";
 import InternetPopup from "./components/InternetPopup";
-import Registration from "./components/Registration";
-import KodiVerifikimit from "./components/KodiVerifikimit";
+import Registration from "./components/screens/Registration";
+import KodiVerifikimit from "./components/screens/KodiVerifikimit";
 import TokenPopUp from "./components/TokenPopUp";
 
 const Stack = createNativeStackNavigator();

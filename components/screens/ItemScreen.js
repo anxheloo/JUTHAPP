@@ -11,11 +11,11 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import GigaMarketScreenHeader from "./GigaMarketScreenHeader";
+import GigaMarketScreenHeader from "../GigaMarketScreenHeader";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../ImageSlider";
 import {
   Swipeable,
   GestureHandlerRootView,
@@ -247,7 +247,7 @@ const ItemScreen = ({ navigation, route }) => {
                       borderRadius: 20,
                       marginLeft: 12,
                     }}
-                    source={require("../assets/images/unnamed.png")}
+                    source={require("../../assets/images/unnamed.png")}
                   ></Image>
                 </View>
               </View>

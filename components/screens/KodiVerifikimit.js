@@ -11,10 +11,11 @@ import {
   Alert,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import InternetPopup from "./InternetPopup";
+import InternetPopup from "../InternetPopup";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
@@ -162,131 +163,134 @@ const KodiVerifikimit = ({ navigation, route }) => {
   };
 
   return (
-    // <KeyboardAvoidingView>
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <LinearGradient
-        style={styles.container}
-        colors={[
-          "#55e1ce",
-          "#00cfe0",
-          "#00bbf2",
-          "#00a2fc",
-          "#0083f4",
-          "#4775ee",
-          "#6964e5",
-          "#8451d7",
-          "#9952db",
-          "#d555e1",
-        ]}
-      >
-        <StatusBar style="auto"></StatusBar>
-        {/* <View style={[{ flex: 1 }, { paddingTop: insets.top }]}> */}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
+        <LinearGradient
+          style={styles.container}
+          colors={[
+            "#55e1ce",
+            "#00cfe0",
+            "#00bbf2",
+            "#00a2fc",
+            "#0083f4",
+            "#4775ee",
+            "#6964e5",
+            "#8451d7",
+            "#9952db",
+            "#d555e1",
+          ]}
+        >
+          <StatusBar style="auto"></StatusBar>
+          {/* <View style={[{ flex: 1 }, { paddingTop: insets.top }]}> */}
 
-        <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={styles.headerTextLeft}
-            onPress={() => {
-              navigation.replace("Login");
-            }}
-          >
-            <AntDesign name="left" size={24} color="white" />
-            <Text style={styles.gigamarketText}>Kthehu</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.logoContainer}>
-          <Text style={{ color: "white", fontSize: 20, padding: 10 }}>
-            Kodi i Verifikimit
-          </Text>
-        </View>
-
-        <View>
-          <View>
-            <Text style={styles.text}>
-              Vendos kodin personal te verifikimit
-            </Text>
-
-            <View
-              style={{
-                flexDirection: "row",
-                paddingHorizontal: 10,
-                justifyContent: "space-between",
+          <View style={styles.headerContainer}>
+            <TouchableOpacity
+              style={styles.headerTextLeft}
+              onPress={() => {
+                navigation.replace("Login");
               }}
             >
-              <TextInput
-                // ref={inputRef}
-                style={styles.input}
-                keyboardType="phone-pad"
-                value={personalCode}
-                onChangeText={(text) => {
-                  setPersonalCode(text);
-                }}
-                // onPressIn={onClickMyButton}
-                maxLength={14}
-              />
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.gigamarketText}>Kthehu</Text>
+            </TouchableOpacity>
+          </View>
 
-              {timerExpired ? (
-                <TouchableOpacity
-                  style={styles.timer}
-                  onPress={handleReloadCode}
+          <View style={styles.logoContainer}>
+            <Text style={{ color: "white", fontSize: 20, padding: 10 }}>
+              Kodi i Verifikimit
+            </Text>
+          </View>
+
+          <View>
+            <View>
+              <Text style={styles.text}>
+                Vendos kodin personal te verifikimit
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  paddingHorizontal: 10,
+                  justifyContent: "space-between",
+                }}
+              >
+                <TextInput
+                  // ref={inputRef}
+                  style={styles.input}
+                  keyboardType="phone-pad"
+                  value={personalCode}
+                  onChangeText={(text) => {
+                    setPersonalCode(text);
+                  }}
+                  // onPressIn={onClickMyButton}
+                  maxLength={14}
+                />
+
+                {timerExpired ? (
+                  <TouchableOpacity
+                    style={styles.timer}
+                    onPress={handleReloadCode}
+                  >
+                    <Ionicons name="refresh-outline" size={24} color="black" />
+                  </TouchableOpacity>
+                ) : (
+                  <View style={styles.timer}>
+                    <Text style={styles.timerText}>{timer}</Text>
+                  </View>
+                )}
+              </View>
+
+              {personalCodeChecker ? (
+                <View
+                  style={{
+                    marginLeft: 12,
+                    backgroundColor: "white",
+                    width: windowWidth / 2,
+                    borderRadius: 10,
+                    marginTop: 10,
+                  }}
                 >
-                  <Ionicons name="refresh-outline" size={24} color="black" />
-                </TouchableOpacity>
-              ) : (
-                <View style={styles.timer}>
-                  <Text style={styles.timerText}>{timer}</Text>
+                  <Text
+                    style={{
+                      paddingHorizontal: 10,
+                      color: "red",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Kodi shume i shkurter!
+                  </Text>
                 </View>
+              ) : (
+                <View></View>
               )}
             </View>
 
-            {personalCodeChecker ? (
-              <View
-                style={{
-                  marginLeft: 12,
-                  backgroundColor: "white",
-                  width: windowWidth / 2,
-                  borderRadius: 10,
-                  marginTop: 10,
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => {
+                  handleVerifyEmail();
                 }}
+                // ref={vazhdoBtnRef}
+                disabled={timerExpired}
               >
-                <Text
-                  style={{
-                    paddingHorizontal: 10,
-                    color: "red",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Kodi shume i shkurter!
-                </Text>
-              </View>
-            ) : (
-              <View></View>
-            )}
+                {loader === false ? (
+                  <Text style={styles.buttonText}>VAZHDO</Text>
+                ) : (
+                  <ActivityIndicator></ActivityIndicator>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
 
-          <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => {
-                handleVerifyEmail();
-              }}
-              // ref={vazhdoBtnRef}
-              disabled={timerExpired}
-            >
-              {loader === false ? (
-                <Text style={styles.buttonText}>VAZHDO</Text>
-              ) : (
-                <ActivityIndicator></ActivityIndicator>
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Show the InternetPopup when showInternetPopup is true */}
-        {showInternetPopup && <InternetPopup />}
-      </LinearGradient>
-    </TouchableWithoutFeedback>
-    /* </KeyboardAvoidingView> */
+          {/* Show the InternetPopup when showInternetPopup is true */}
+          {showInternetPopup && <InternetPopup />}
+        </LinearGradient>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
