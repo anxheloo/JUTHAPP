@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import jwt_decode from "jwt-decode";
 import { tokenAlert } from "./tokenAlert";
+import TokenPopUp from "./TokenPopUp";
 
 const MainComponent = () => {
   // {navigation;}
@@ -33,54 +34,61 @@ const MainComponent = () => {
 
   // tokenAlert(navigation);
 
-  const checkTokenExpiration = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
+  // const checkTokenExpiration = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem("token");
 
-      if (token) {
-        const { exp } = jwt_decode(token);
-        const currentTimestamp = Math.floor(Date.now() / 1000);
+  //     if (token) {
+  //       const { exp } = jwt_decode(token);
+  //       const currentTimestamp = Math.floor(Date.now() / 1000);
 
-        if (exp <= currentTimestamp && !alertShown) {
-          // Token has expired, show an alert
-          Alert.alert(
-            "Token has expired",
-            "Log in again!",
-            [
-              {
-                text: "Log in again",
-                onPress: async () => {
-                  setAlertShown(false);
-                  const id = await AsyncStorage.getItem("id");
-                  const userId = `user${JSON.parse(id)}`;
-                  await AsyncStorage.multiRemove([userId, "id", "token"]);
-                  navigation.replace("Login");
-                },
-              },
-            ],
-            { cancelable: false }
-          );
+  //       if (exp <= currentTimestamp && !alertShown) {
+  //         // Token has expired, show an alert
+  //         Alert.alert(
+  //           "Token has expired",
+  //           "Log in again!",
+  //           [
+  //             {
+  //               text: "Log in again",
+  //               onPress: async () => {
+  //                 setAlertShown(false);
+  //                 const id = await AsyncStorage.getItem("id");
+  //                 const userId = `user${JSON.parse(id)}`;
+  //                 await AsyncStorage.multiRemove([userId, "id", "token"]);
+  //                 navigation.replace("Login");
+  //               },
+  //             },
+  //           ],
+  //           { cancelable: false }
+  //         );
 
-          setAlertShown(true);
-        }
-      }
-    } catch (error) {
-      console.log("Error checking token expiration:", error);
-    }
-  };
+  //         setAlertShown(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error checking token expiration:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    // Check token expiration every 10 seconds (adjust this interval as needed)
-    const tokenCheckInterval = setInterval(checkTokenExpiration, 10000);
+  // useEffect(() => {
+  //   // Check token expiration every 10 seconds (adjust this interval as needed)
+  //   const tokenCheckInterval = setInterval(checkTokenExpiration, 10000);
 
-    // Initial check when the component mounts
-    checkTokenExpiration();
+  //   // Initial check when the component mounts
+  //   checkTokenExpiration();
 
-    // Cleanup interval on unmount
-    return () => {
-      clearInterval(tokenCheckInterval);
-    };
-  }, []);
+  //   // Cleanup interval on unmount
+  //   return () => {
+  //     clearInterval(tokenCheckInterval);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   // Initial check when the component mounts
+  //   // checkTokenExpiration();
+
+  //   console.log("THIS IS USE EFFECT");
+  // }, [navigation]);
 
   //This is the 2-Way to use to prevent going back in LoginPage when im currently in HomePage. Go to KodiVerifikimit for WAY-1
   /*
@@ -113,6 +121,8 @@ const MainComponent = () => {
     const id = await AsyncStorage.getItem("id");
     const userId = `user${JSON.parse(id)}`;
     const token = await AsyncStorage.getItem("token");
+
+    console.log("INSIDE MAINCOMPONENT:", token);
 
     // if(token){
 
@@ -169,44 +179,47 @@ const MainComponent = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <LinearGradient
-        style={[styles.container, { paddingTop: insets.top }]}
-        colors={[
-          "#55e1ce",
-          "#00cfe0",
-          "#00bbf2",
-          "#00a2fc",
-          "#0083f4",
-          "#4775ee",
-          "#6964e5",
-          "#8451d7",
-          "#9952db",
-          "#d555e1",
-        ]}
-      >
-        <StatusBar style="auto"></StatusBar>
-        <Header userData={userData} navigation={navigation} />
-        <ScrollView
-          // onScroll={handleScroll}
-          contentContainerStyle={styles.scrollContainer}
-          // scrollEventThrottle={16}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+    <>
+      {/* <TokenPopUp navigation={navigation}></TokenPopUp> */}
+      <View style={{ flex: 1 }}>
+        <LinearGradient
+          style={[styles.container, { paddingTop: insets.top }]}
+          colors={[
+            "#55e1ce",
+            "#00cfe0",
+            "#00bbf2",
+            "#00a2fc",
+            "#0083f4",
+            "#4775ee",
+            "#6964e5",
+            "#8451d7",
+            "#9952db",
+            "#d555e1",
+          ]}
         >
-          {/* {refreshing && (
+          <StatusBar style="auto"></StatusBar>
+          <Header userData={userData} navigation={navigation} />
+          <ScrollView
+            // onScroll={handleScroll}
+            contentContainerStyle={styles.scrollContainer}
+            // scrollEventThrottle={16}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            {/* {refreshing && (
             <View style={styles.indicatorContainer}>
               <ActivityIndicator size="large" color="#ffffff" />
             </View>
           )} */}
-          <Story></Story>
-          <ButtonGroup></ButtonGroup>
-          <TabViewExample></TabViewExample>
-        </ScrollView>
-        <Footer navigation={navigation} style={styles.footer}></Footer>
-      </LinearGradient>
-    </View>
+            <Story></Story>
+            <ButtonGroup></ButtonGroup>
+            <TabViewExample></TabViewExample>
+          </ScrollView>
+          <Footer navigation={navigation} style={styles.footer}></Footer>
+        </LinearGradient>
+      </View>
+    </>
   );
 };
 

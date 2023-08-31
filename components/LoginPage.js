@@ -42,7 +42,7 @@ const LoginPage = ({ navigation }) => {
     const checkLoginStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        const secret = await AsyncStorage.getItem("secret");
+        // const secret = await AsyncStorage.getItem("secret");
 
         if (token) {
           // Decode the token to get the expiration timestamp (in seconds)

@@ -10,6 +10,7 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -161,6 +162,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
   };
 
   return (
+    // <KeyboardAvoidingView>
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <LinearGradient
         style={styles.container}
@@ -284,6 +286,7 @@ const KodiVerifikimit = ({ navigation, route }) => {
         {showInternetPopup && <InternetPopup />}
       </LinearGradient>
     </TouchableWithoutFeedback>
+    /* </KeyboardAvoidingView> */
   );
 };
 
